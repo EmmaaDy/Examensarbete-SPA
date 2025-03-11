@@ -8,8 +8,8 @@ import Confirmation from './pages/Confirmation';
 import Contact from './pages/Contact';
 import Events from './pages/Events';
 import EventPackages from './pages/EventPackages';
-import AdminPanel from './pages/AdminPanel';
-import AdminDashboard from './pages/AdminDashboard';
+import AdminPanel from './pages/admin/AdminPanel';
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 const App = () => {
   return (
