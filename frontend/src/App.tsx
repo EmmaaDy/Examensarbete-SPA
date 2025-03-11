@@ -1,6 +1,7 @@
-import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from '../src/components/Navbar';  // Importera Navbar här
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
@@ -15,20 +16,36 @@ import AdminDashboard from './pages/AdminDashboard';
 const App = () => {
   return (
     <Router>
-      <Navbar />  {/* Lägg till Navbar här */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/booking" element={<Booking />} />
-        <Route path="/confirmation" element={<Confirmation />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/events" element={<Events />} />
-        <Route path="/event/packages" element={<EventPackages />} />
-        <Route path="/admin" element={<AdminPanel />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-      </Routes>
+      <MainLayout />
     </Router>
+  );
+};
+
+const MainLayout = () => {
+  const location = useLocation();
+
+  const hideLayout = ['/admin', '/admin/dashboard'].includes(location.pathname);
+
+  return (
+    <div className="app-container">
+      {!hideLayout && <Navbar />}
+      <main className="content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/booking" element={<Booking />} />
+          <Route path="/confirmation" element={<Confirmation />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/event/packages" element={<EventPackages />} />
+
+          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        </Routes>
+      </main>
+      {!hideLayout && <Footer />}
+    </div>
   );
 };
 
