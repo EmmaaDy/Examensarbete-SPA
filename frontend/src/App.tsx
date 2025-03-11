@@ -1,3 +1,4 @@
+import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from '../src/components/Navbar';  // Importera Navbar här
 import Home from './pages/Home';
