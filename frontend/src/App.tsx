@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 import Home from './pages/Home';
 import About from './pages/About';
@@ -43,7 +44,7 @@ const MainLayout = () => {
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
         </Routes>
       </main>
-      
+      {!hideLayout && <Footer />}
     </div>
   );
 };
