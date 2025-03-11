@@ -47,6 +47,10 @@
   color: #23333E;
 }
 
+.nav-links .active {
+  color: #23333E;
+}
+
 .booking-btn {
   background-color: #3b2f2f;
   color: white;
@@ -54,6 +58,7 @@
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
+  text-decoration: none;
   border-radius: 50px;
   transition: background 0.3s;
 }
