@@ -1,34 +1,24 @@
-import { useState } from 'react';
-import { Link  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import Logo from '../assets/Logo.svg'
 import '../styles/Navbar.css';
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
+const Navbar: React.FC = () => {
   return (
-    <nav className={`navbar ${isOpen ? 'open' : ''}`}>
-      {/* Hamburgarikonen */}
-      <div className="hamburger" onClick={toggleMenu}>
-        <span className="bar"></span>
-        <span className="bar"></span>
-        <span className="bar"></span>
-      </div>
-
-      {/* Navigeringsmenyn som kommer från vänster */}
-      <div className={`side-menu ${isOpen ? 'active' : ''}`}>
+    <nav className="navbar">
+      <div className="nav-container">
+        <div className="logo">
+          <img src={Logo} alt="Logo" />
+        </div>
         <ul className="nav-links">
-          <li><Link to="/" onClick={toggleMenu}>Home</Link></li>
-          <li><Link to="/about" onClick={toggleMenu}>About</Link></li>
-          <li><Link to="/services" onClick={toggleMenu}>Services</Link></li>
-          <li><Link to="/booking" onClick={toggleMenu}>Booking</Link></li>
-          <li><Link to="/contact" onClick={toggleMenu}>Contact</Link></li>
-          <li><Link to="/events" onClick={toggleMenu}>Events</Link></li>
-          <li><Link to="/admin" onClick={toggleMenu}>Admin Panel</Link></li>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/about">About</Link></li>
+          <li><Link to="/services">Services</Link></li>
+          <li><Link to="/booking">Booking</Link></li>
+          <li><Link to="/contact">Contact</Link></li>
+          <li><Link to="/events">Events</Link></li>
+          <li><Link to="/admin">Admin Panel</Link></li>
         </ul>
+        <button className="booking-btn">Booking</button>
       </div>
     </nav>
   );
