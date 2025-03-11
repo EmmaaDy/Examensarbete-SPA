@@ -1,0 +1,19 @@
+.footer {
+    width: 100%;
+    background-color: #3A5465; /* Anpassa färgen */
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    position: relative; /* Se till att den håller sig längst ner */
+    bottom: 0;
+  }
+  
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Minsta höjd = hela skärmen */
+  }
+  
+  .content {
+    flex: 1; /* Gör att innehållet växer och trycker ner footern */
+  }
