@@ -9,9 +9,11 @@ const AdminDashboard: React.FC = () => {
     // Check if JWT token exists in localStorage
     const token = localStorage.getItem('jwtToken');
     if (!token) {
+
       // If no token exists, redirect user to login page
       navigate('/admin');
     } else {
+      
       // If token exists, set user as authenticated
       setIsAuthenticated(true);
     }
