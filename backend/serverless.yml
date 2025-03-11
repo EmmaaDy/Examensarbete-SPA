@@ -1,0 +1,169 @@
+service: oceanic-aquarius-backend
+
+frameworkVersion: "4"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: eu-north-1
+  environment:
+    JWT_SECRET: ${env:JWT_SECRET}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+            - dynamodb:BatchGetItem
+          Resource:
+            - '*'
+
+functions:
+  getTreatments:
+    handler: src/handlers/getTreatments.getTreatments
+    events:
+      - httpApi:
+          path: /treatments
+          method: get
+
+  createBooking:
+    handler: src/handlers/createBooking.createBooking
+    events:
+      - httpApi:
+          path: /bookings
+          method: post
+
+  adminLogin:
+    handler: src/handlers/admin/postadminlogin.adminLoginOrCreate
+    events:
+      - httpApi:
+          path: /admin/login
+          method: post
+
+  createTreatment:
+    handler: src/handlers/admin/createTreatment.createTreatment
+    events:
+      - httpApi:
+          path: /admin/treatments
+          method: post
+
+  getAllTreatments:
+    handler: src/handlers/admin/getAllTreatments.getAllTreatments
+    events:
+      - httpApi:
+          path: /admin/treatments
+          method: get
+
+  updateTreatment:
+    handler: src/handlers/admin/updateTreatment.updateTreatment
+    events:
+      - httpApi:
+          path: /admin/treatments/{id}
+          method: put
+
+  deleteTreatment:
+    handler: src/handlers/admin/deleteTreatment.deleteTreatment
+    events:
+      - httpApi:
+          path: /admin/treatments/{id}
+          method: delete
+
+  updateBookingStatus:
+    handler: src/handlers/admin/updateBookingStatus.updateBookingStatus
+    events:
+      - httpApi:
+          path: /admin/bookings/status/{bookingId}
+          method: put
+
+  cancelBooking:
+    handler: src/handlers/cancelBooking.cancelBooking
+    events:
+      - httpApi:
+          path: /bookings/cancel
+          method: post
+
+
+resources:
+  Resources:
+    TreatmentsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Treatments
+        AttributeDefinitions:
+          - AttributeName: "treatmentId"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "treatmentId"
+            KeyType: "HASH"
+        BillingMode: PAY_PER_REQUEST
+
+    BookingsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Bookings
+        AttributeDefinitions:
+          - AttributeName: "bookingId"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "bookingId"
+            KeyType: "HASH"
+        BillingMode: PAY_PER_REQUEST
+
+    AdminUsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: AdminUsers
+        AttributeDefinitions:
+          - AttributeName: "username"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "username"
+            KeyType: "HASH"
+        BillingMode: PAY_PER_REQUEST
+
+    PaymentTransactionsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: PaymentTransactions
+        AttributeDefinitions:
+          - AttributeName: "paymentId"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "paymentId"
+            KeyType: "HASH"
+        BillingMode: PAY_PER_REQUEST
+
+
+custom:
+  esbuild:
+    target: 'node18'
+    sourcemap: true
+    minify: false
+    bundle: true
+    loader:
+      '.ts': 'ts'
+      '.tsx': 'tsx'
+    webpack:
+    exclude:
+      - jsonwebtoken
+      - uuid
+      - bcryptjs
+      - dotenv
+    cors:
+      allowOrigins:
+        - "*"
+      allowHeaders:
+        - Content-Type
+        - x-api-key
+      allowMethods:
+        - GET
+        - POST
+        - PATCH
+        - DELETE
+        - PUT
+        - OPTIONS

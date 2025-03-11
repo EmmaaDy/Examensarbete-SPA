@@ -1,0 +1,62 @@
+/* Navbar.css */
+
+.navbar {
+  position: relative;
+  z-index: 10;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.hamburger .bar {
+  width: 30px;
+  height: 3px;
+  margin: 5px 0;
+  background-color: #507061;
+}
+
+/* Sidomenyn - döljs som standard */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -250px;  /* Menyn är helt utanför skärmen till vänster */
+  width: 250px;
+  height: 100%;
+  background-color: #507061;
+  transition: left 0.3s ease;  /* Animering för att menyn ska komma in */
+  padding-top: 50px;
+}
+
+.side-menu.active {
+  left: 0;  /* När menyn är öppen, skjuts den in från vänster */
+}
+
+.nav-links {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-links li {
+  margin: 20px 0;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 10px;
+  display: block;
+}
+
+.nav-links a:hover {
+  background-color: #555;
+}
+
+/* För att skapa en transparent bakgrund för resten av sidan när menyn är öppen */
+.navbar.open .side-menu {
+  display: block;
+}
