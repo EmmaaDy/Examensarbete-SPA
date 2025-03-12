@@ -1,0 +1,95 @@
+.admin-booking-form-container {
+  background-color: #f8f9fa;
+  padding: 30px;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 20px auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-family: Arial, sans-serif;
+}
+
+.admin-booking-form-title {
+  color: #343a40;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.admin-booking-form-group {
+  margin-bottom: 20px;
+}
+
+.admin-booking-form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 5px;
+}
+
+.admin-booking-form-group input,
+.admin-booking-form-group select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #495057;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.admin-booking-form-group input::placeholder {
+  color: #6c757d;
+}
+
+.admin-booking-form-group input:focus,
+.admin-booking-form-group select:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+.admin-booking-form-group input[type="checkbox"] {
+  width: auto;
+  margin-right: 10px;
+}
+
+.admin-booking-btn-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.admin-booking-btn {
+  width: 48%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #fff;
+  background-color: #507061;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.admin-booking-btn:hover {
+  background-color: #2c4251;
+}
+
+.admin-booking-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}

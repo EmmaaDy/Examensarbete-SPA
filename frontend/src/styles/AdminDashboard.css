@@ -1,0 +1,193 @@
+.admin-dashboard {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Arial', sans-serif;
+}
+
+.admin-dashboard-content {
+  display: flex;
+  position: relative;
+}
+
+.admin-dashboard-centered-content h1 {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.admin-dashboard-centered-content p {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  margin-bottom: 4rem;
+}
+
+.admin-dashboard-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #507061;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1002;
+}
+
+.admin-dashboard-navbar .admin-dashboard-menu-toggle-button {
+  font-size: 30px;
+  background: none;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.admin-dashboard-navbar .admin-dashboard-menu-toggle-button:hover {
+  transform: scale(1.1);
+}
+
+.admin-dashboard-sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  height: 100%;
+  background-color: #507061;
+  width: 250px;
+  padding-top: 80px;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+.admin-dashboard-sidebar.open {
+  transform: translateX(250px);
+}
+
+.admin-dashboard-sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.admin-dashboard-sidebar li {
+  padding: 15px;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.admin-dashboard-sidebar li:hover {
+  background-color: #3A5465;
+}
+
+.admin-dashboard-logout-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background-color: #3D3931;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  z-index: 1003;
+}
+
+.admin-dashboard-logout-btn:hover {
+  background-color: #474444;
+  transform: scale(1.1);
+}
+
+.admin-dashboard-main-content {
+  margin-left: 0;
+  padding: 80px;
+  flex-grow: 1;
+  transition: margin-left 0.3s ease;
+}
+
+.admin-dashboard-main-content.menu-open {
+  margin-left: 250px;
+}
+
+.admin-dashboard-date-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.admin-dashboard-date-navigation button {
+  flex-shrink: 0;
+  background-color: #507061;
+  color: white;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.admin-dashboard-date-navigation button:hover {
+  background-color: #3A5465;
+  transform: scale(1.05);
+}
+
+.admin-dashboard-date-navigation .react-datepicker-wrapper {
+  flex-shrink: 0;
+}
+
+.admin-dashboard-schedule {
+  margin-top: 20px;
+}
+
+.admin-dashboard-schedule h3 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.admin-dashboard-schedule table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #3A5465;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.admin-dashboard-schedule th,
+.admin-dashboard-schedule td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+.admin-dashboard-schedule th {
+  background-color: #D9D9D9;
+  color: black;
+  font-weight: bold;
+}
+
+.admin-dashboard-schedule td {
+  color: white;
+  font-size: 0.9rem;
+}
+
+.admin-dashboard-schedule button {
+  background-color: #3A5465;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.admin-dashboard-schedule button:hover {
+  background-color: #1d1c1c;
+  transform: scale(1.1);
+}

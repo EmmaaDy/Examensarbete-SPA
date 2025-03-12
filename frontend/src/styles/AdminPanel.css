@@ -5,7 +5,6 @@ html, body {
   height: 100%;
 }
 
-/* Admin Panel Container */
 .admin-panel-container {
   position: absolute; 
   top: 50%; 
@@ -21,7 +20,6 @@ html, body {
   overflow: hidden; 
 }
 
-/* Bakgrundsbild */
 .admin-panel-background {
   background-image: url("../assets/green2.png");
   position: fixed; 
@@ -35,8 +33,7 @@ html, body {
   z-index: -1; 
 }
 
-/* Panel titel */
-.panel-title {
+.admin-panel-title {
   font-family: 'Playfair Display', serif;
   font-size: 64px;
   text-align: center;
@@ -45,8 +42,7 @@ html, body {
   z-index: 1; 
 }
 
-/* Formulär */
-form {
+.admin-panel-form {
   background-color: rgba(80, 112, 97, 0.9); 
   padding: 40px; 
   border-radius: 10px;
@@ -58,16 +54,14 @@ form {
   margin-bottom: 30px; 
 }
 
-/* Form rubrik */
-form h2 {
+.admin-panel-form-title {
   color: #000000;
   margin-bottom: 20px;
   text-transform: uppercase;
   font-weight: 300; 
 }
 
-/* Input och button styling */
-input, button {
+.admin-panel-input, .admin-panel-button {
   width: 80%;
   padding: 10px;
   margin: 10px 0;
@@ -78,25 +72,23 @@ input, button {
   margin-right: auto;
 }
 
-input {
+.admin-panel-input {
   background-color: #3A5465;
   color: white;
 }
 
-button {
+.admin-panel-button {
   background-color: #3A5465;
   color: white;
   cursor: pointer;
-  width: 50%;
   text-transform: uppercase;
 }
 
-button:hover {
+.admin-panel-button:hover {
   background-color: #62a16d;
 }
 
-/* Felmeddelande */
-.error-message {
+.admin-panel-error-message {
   color: red;
   text-align: center;
 }
