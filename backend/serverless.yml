@@ -87,6 +87,12 @@ functions:
           path: /bookings/cancel
           method: post
 
+  getAllBookings:
+    handler: src/handlers/admin/getAllBookings.getAllBookings
+    events:
+      - httpApi:
+          path: /admin/bookings
+          method: get
 
 resources:
   Resources:

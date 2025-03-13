@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
-import '../../styles/AdminPanel.css'; 
+import { useNavigate } from 'react-router-dom';
+import '../../styles/AdminPanel.css';
 
 const AdminPanel: React.FC = () => {
-  const [adminID, setAdminID] = useState<string>(''); 
+  const [adminID, setAdminID] = useState<string>('');
   const [adminPassword, setAdminPassword] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -47,27 +47,31 @@ const AdminPanel: React.FC = () => {
   return (
     <div className="admin-panel-container">
       <div className="admin-panel-background"></div>
-      <h1 className="panel-title">Panel Oceanic Aquarius</h1>
-      <form onSubmit={handleLogin}>
-        <h2>Login</h2>
+      <h1 className="admin-panel-title">Panel Oceanic Aquarius</h1>
+      <div className="admin-panel-form">
+        <h2 className="admin-panel-form-title">Login</h2>
         <input
+          className="admin-panel-input"
           type="text"
           placeholder="Admin ID"
           value={adminID}
           onChange={(e) => setAdminID(e.target.value)}
           required
+          aria-label="Admin ID"
         />
         <input
+          className="admin-panel-input"
           type="password"
           placeholder="Password"
           value={adminPassword}
           onChange={(e) => setAdminPassword(e.target.value)}
           required
+          aria-label="Password"
         />
-        <button type="submit">Login</button>
-      </form>
+        <button type="submit" className="admin-panel-button" onClick={handleLogin}>Login</button>
+      </div>
 
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      {errorMessage && <p className="admin-panel-error-message">{errorMessage}</p>}
     </div>
   );
 };
