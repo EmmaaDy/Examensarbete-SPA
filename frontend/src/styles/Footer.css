@@ -124,8 +124,12 @@
 
 .under-panel {
   display: flex;
-  justify-content: space-around;
-  margin-left: -200px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1440px;
+  padding: 10px 35px;
+  position: relative;
 }
 
 .admin {
