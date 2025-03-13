@@ -13,7 +13,7 @@ import serviceImage9 from '../assets/pool.png';
 
 import serviceImage10 from '../assets/green.png';
 
-import '../styles/Home.css'; 
+import '../styles/Home.css';
 
 const Home = () => {
   return (
@@ -42,37 +42,60 @@ const Home = () => {
 
         {/* Other service images */}
         <div className="home-service-images">
-          <img src={serviceImage1} alt="Service 1" />
-          <img src={serviceImage2} alt="Service 2" />
-          <img src={serviceImage3} alt="Service 3" />
+          <div className="image-row">
+            <img src={serviceImage1} alt="Service 1" />
+            <img src={serviceImage2} alt="Service 2" />
+          </div>
+          <div className="image-row">
+            <img src={serviceImage3} alt="Service 3" />
+          </div>
         </div>
       </section>
-    
+
       {/* About Us Section */}
       <section className="home-about-us">
-        <h2>About Us</h2>
-        <p>A Healthy Body Is A Guest-Chamber For The Soul</p>
-        <h3>“Go On – Treat Yourself”</h3>
-        <p>Nunc quis eleifend lectus. Donec id semper ligula, ut laoreet orci. Donec tempor vestibulum quam non gravida. Sed eleifend, erat at pulvinar hendrerit, diam dui dignissim diam, non congue nibh sem eget sapien.</p>
-        <Link to="/about">View More</Link>
-
-        {/* Bilder under "About Us" */}
+        <div className="home-about-us-container">
+          {/* Text part */}
+          <div className="home-about-us-text">
+            <h2>About Us</h2>
+            <h3>A Healthy Body Is A Guest-Chamber For The Soul</h3>
+            <p>
+              Nunc quis eleifend lectus. Donec id semper ligula, ut laoreet orci. Donec tempor vestibulum quam non gravida. Sed eleifend,
+              erat at pulvinar hendrerit, diam dui dignissim diam, non congue nibh sem eget sapien.
+            </p>
+            <Link to="/about">View More</Link>
+          </div>
+        </div>
         <div className="home-about-images">
+          <hr className="line-before-image" />
           <img src={serviceImage4} alt="About Us" />
+          <hr className="line-after-image" />
         </div>
       </section>
 
       {/* Our Rooms & Treatments Section */}
       <section className="home-rooms-treatments">
-        <h2>Our Rooms & Treatments</h2>
-        <p>A Room for Every Moment of Calm</p>
-        <h3>“Discover spaces that inspire relaxation, connection, and self-care.”</h3>
-        <p>Nunc quis eleifend lectus. Donec id semper ligula, ut laoreet orci. Donec tempor vestibulum quam non gravida. Sed eleifend, erat at pulvinar hendrerit, diam dui dignissim diam, non congue nibh sem eget sapien.</p>
-        <Link to="/rooms-and-treatments">View More</Link>
+        <div className="home-rooms-treatments-container">
+          {/* Text part */}
+          <div className="home-rooms-treatments-text">
+            <h2>Our Rooms & Treatments</h2>
+            <p>A Room for Every Moment of Calm</p>
+            <h3>“Discover spaces that inspire relaxation, connection, and self-care.”</h3>
+            <p>
+              Nunc quis eleifend lectus. Donec id semper ligula, ut laoreet orci. Donec tempor vestibulum quam non gravida. Sed eleifend,
+              erat at pulvinar hendrerit, diam dui dignissim diam, non congue nibh sem eget sapien.
+            </p>
+            <Link to="/rooms-and-treatments">View More</Link>
+          </div>
 
-        {/* Bilder under "Rooms & Treatments" */}
+          {/* Image part - Sauna */}
+          <div className="home-rooms-treatments-image">
+            <img src={serviceImage5} alt="Sauna" />
+          </div>
+        </div>
+
+        {/* Images under Rooms & Treatments */}
         <div className="home-room-images">
-          <img src={serviceImage5} alt="Sauna" />
           <img src={serviceImage6} alt="Outdoor Sauna" />
           <img src={serviceImage7} alt="Massage" />
           <img src={serviceImage8} alt="Facial" />
@@ -84,19 +107,31 @@ const Home = () => {
       <section className="home-events">
         <h2>Events</h2>
         <p>Explore our upcoming events</p>
-        <div>
-          <h4>Apr 10, 2025</h4>
-          <p>Nunc quis eleifend lectus. Donec id semper ligula, ut laoreet orci. Donec tempor vestibulum quam non gravida.</p>
-        </div>
-        <div>
-          <h4>Apr 27, 2025</h4>
-          <p>Less Stress, More Facials – “Go On – Treat Yourself”</p>
-          <p>Escape from Everyday Life. Keep Calm and Spa On</p>
+        <div className="events-container">
+          <div className="event-item">
+            <p>Apr 10, 2025</p>
+            <h1>Less Stress, More Facials</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent a nisi nec lectus interdum porttitor.</p>
+            <Link to="/events" className="explore-link">Explore &gt;</Link>
+          </div>
+
+          <div className="event-item">
+            <p>Apr 10, 2025</p>
+            <h1>Keep Calm and Spa On</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent a nisi nec lectus interdum porttitor.</p>
+            <Link to="/events" className="explore-link">Explore &gt;</Link>
+          </div>
+
+          <div className="event-item">
+            <p>Apr 27, 2025</p>
+            <h1>Escape from Everyday Life</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent a nisi nec lectus interdum porttitor.</p>
+            <Link to="/events" className="explore-link">Explore &gt;</Link>
+          </div>
         </div>
 
-        {/* Länkar för att utforska events */}
-        <Link to="/events">Explore</Link>
-        <Link to="/event/packages" className="home-event-packages-link">Event Packages</Link>
+        {/* Link to explore events */}
+        <Link to="/event/packages" className="home-event-packages-link">View more</Link>
       </section>
     </div>
   );
