@@ -6,12 +6,11 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  text-align: center;
 }
 
 .footer-leaf {
   position: absolute;
-  top: -165px;
+  top: -175px;
   left: 9px;
   width: 250px;
 }
@@ -44,7 +43,7 @@
 
 .footer-flower {
   position: absolute;
-  bottom: -10px;
+  bottom: -25px;
   right: 1%;
   width: 110px;
   z-index: 20;
@@ -59,7 +58,8 @@
 
 .tagline {
   max-width: 500px;
-  margin-top: 35px;
+  margin-top: 25px;
+  margin-left: 30px;
   color: #507061;
   text-transform: uppercase;
   font-family:'Arial', sans-serif;
@@ -85,6 +85,7 @@
 }
 
 .footer-sitemap nav {
+  list-style: none;
   display: flex;
   flex-direction: row;
   gap: 30px;
@@ -95,4 +96,29 @@
   font-family:'Arial', sans-serif;
   color: #000000;
   font-weight: lighter; 
+}
+
+.social-icons {
+  display: flex;
+  margin-left: 30px;
+}
+
+.icon {
+  font-size: 24px; 
+  color: #333;
+  opacity: 0.5; 
+  margin-right: 30px;
+}
+
+.divider {
+  width: 95%;
+  height: 1px;
+  background-color: black;
+  margin: 10px 30px;
+}
+
+.under-panel {
+  display: flex;
+  justify-content: space-around;
+  margin-left: -200px;
 }
