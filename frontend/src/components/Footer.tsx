@@ -8,6 +8,7 @@ import pattern2 from '../assets/green-pattern2.png'
 
 
 const Footer = () => {
+
   return (
     <footer className="footer">
   <img src={leaf} alt="Leaf" className="footer-leaf" />
@@ -20,17 +21,29 @@ const Footer = () => {
         <div className="footer-sitemap">
           <h4>Sitemap</h4>
           <nav>
-            <li><NavLink to="/">Home</NavLink></li>
-            <li><NavLink to="/about">About</NavLink></li>
-            <li><NavLink to="/services">Services</NavLink></li>
-            <li><NavLink to="/booking">Booking</NavLink></li>
-            <li><NavLink to="/contact">Contact</NavLink></li>
-            <li><NavLink to="/events">Events</NavLink></li>
-            <li><NavLink to="/admin">Admin Panel</NavLink></li>
+            <ul>
+              <li>
+                <NavLink to="/">Home</NavLink>
+              </li>
+              <li>
+                <NavLink to="/about">About</NavLink>
+              </li>
+              <li>
+                <NavLink to="/services">Services</NavLink>
+              </li>
+              <li>
+                <NavLink to="/booking">Booking</NavLink>
+              </li>
+              <li>
+                <NavLink to="/contact">Contact</NavLink>
+              </li>
+              <li>
+                <NavLink to="/events">Events</NavLink>
+              </li>
+            </ul>
           </nav>
         </div>
   </div>
-
   <div className="footer-bottom-decorations">
     <img src={pattern2} alt="Pattern" className="footer-pattern pattern-right" />
     <img src={Flower} alt="Flower" className="footer-flower" />
@@ -42,12 +55,12 @@ const Footer = () => {
     </div>
   </div>
   <div className='divider'></div>
-  <div className='under-panel'>
-    <p className='copyright'> Copyright Dotcreativemarket</p>
-    <p className='Terms'>Terms of Use</p>
-    <p className='privacy'>Privacy Policy</p>
-    <p className='admin-panel'>Admin panel</p>
-  </div>
+    <div className="under-panel">
+      <p className="copyright">Copyright Dotcreativemarket</p>
+      <p className="terms">Terms of Use</p>
+      <p className="privacy">Privacy Policy</p>
+      <NavLink to="/admin" className="admin" onClick={() => console.log('Admin Panel clicked!')}>Admin panel</NavLink>
+    </div>
 </footer>
   );
 };
