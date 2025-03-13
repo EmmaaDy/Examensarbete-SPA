@@ -10,7 +10,6 @@ const SECRET_KEY = process.env.JWT_SECRET || 'default_secret_key';
 
 export const getAllBookings = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   try {
-    // Kontrollera JWT-token från headern
     const token = event.headers['Authorization']?.split(' ')[1] || event.headers['authorization']?.split(' ')[1];
     if (!token) {
       return {
@@ -19,7 +18,6 @@ export const getAllBookings = async (event: APIGatewayProxyEvent): Promise<APIGa
       };
     }
 
-    // Verifiera JWT-token
     let decoded;
     try {
       decoded = jwt.verify(token, SECRET_KEY) as { username: string, role: string };
@@ -30,7 +28,6 @@ export const getAllBookings = async (event: APIGatewayProxyEvent): Promise<APIGa
       };
     }
 
-    // Kontrollera om användaren är admin
     if (decoded.role !== 'admin') {
       return {
         statusCode: 403,
@@ -38,14 +35,12 @@ export const getAllBookings = async (event: APIGatewayProxyEvent): Promise<APIGa
       };
     }
 
-    // Hämta alla bokningar från DynamoDB
     const scanCommand = new ScanCommand({
       TableName: 'Bookings',
     });
 
     const data = await db.send(scanCommand);
 
-    // Om inga bokningar hittas
     if (!data.Items || data.Items.length === 0) {
       return {
         statusCode: 404,
@@ -53,16 +48,22 @@ export const getAllBookings = async (event: APIGatewayProxyEvent): Promise<APIGa
       };
     }
 
-    // Returnera alla bokningar som JSON
+    const bookings = data.Items.map((item: any) => ({
+      bookingId: item.bookingId.S,
+      treatmentName: item.treatmentName.S,
+      date: item.date.S,
+      time: item.time.S,
+      customerName: item.name.S,
+    }));
+
     return {
       statusCode: 200,
       body: JSON.stringify({
         message: 'Bookings fetched successfully',
-        bookings: data.Items,
+        bookings: bookings,
       }),
     };
   } catch (error: unknown) {
-    // Hantera oväntade fel
     if (error instanceof Error) {
       return {
         statusCode: 500,

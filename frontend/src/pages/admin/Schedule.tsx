@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
-import '../../styles/AdminDashboard.css'; 
+import { useNavigate } from 'react-router-dom';
+import '../../styles/AdminDashboard.css';
 
 const Schedule: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   return (
     <div className="admin-dashboard">
       <div className="admin-dashboard-content">
         <div className="admin-dashboard-navbar">
           <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)} 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="admin-dashboard-menu-toggle-button"
           >
             ☰
@@ -27,8 +27,8 @@ const Schedule: React.FC = () => {
           </ul>
         </div>
         <div className={`admin-dashboard-main-content ${isMenuOpen ? 'menu-open' : ''}`}>
-        <div className="admin-dashboard-centered-content">
-          <h1>Schedule</h1>
+          <div className="admin-dashboard-centered-content">
+            <h1>Schedule</h1>
           </div>
           <p>This is the schedule page.</p>
         </div>

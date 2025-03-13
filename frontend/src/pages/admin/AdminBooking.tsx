@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/AdminDashboard.css';
-import '../../styles/AdminBooking.css'; 
-
+import '../../styles/AdminBooking.css';
 
 const AdminBooking: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -17,7 +16,7 @@ const AdminBooking: React.FC = () => {
     email: '',
     phone: '',      
     date: '',
-    time: '',
+    time: '',  
     payAtSalon: true,  
     paymentMethod: 'Pay at Salon', 
   });
@@ -63,20 +62,18 @@ const AdminBooking: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Validera tiden
-    const timeParts = formData.time.split('-');
-    if (timeParts.length !== 2) {
-      setErrorMessage('Invalid time format. Please use HH:MM-HH:MM.');
+    const timeParts = formData.time.split(':');
+    if (timeParts.length !== 2 || isNaN(Number(timeParts[0])) || isNaN(Number(timeParts[1]))) {
+      setErrorMessage('Invalid time format. Please use HH:MM.');
       setIsSubmitting(false);
       return;
     }
 
     const formattedFormData = {
       ...formData,
-      time: formData.time, 
+      time: formData.time,  
     };
 
-    // Logga data för felsökning
     console.log('Sending booking data:', formattedFormData);
 
     try {
@@ -125,131 +122,130 @@ const AdminBooking: React.FC = () => {
         </div>
 
         <div className={`admin-dashboard-main-content ${isMenuOpen ? 'menu-open' : ''}`}>
-        <div className="admin-dashboard-centered-content">
+          <div className="admin-dashboard-centered-content">
             <h1>Create Booking</h1>
           </div>
           
           {errorMessage && <p className="error-message">{errorMessage}</p>}
 
           <form onSubmit={handleSubmit} className="admin-booking-form-container">
-          <div className="admin-booking-form-title">Create Booking</div>
+            <div className="admin-booking-form-title">Create Booking</div>
 
-          {errorMessage && <p className="error-message">{errorMessage}</p>}
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-          <div className="admin-booking-form-group">
-            <label>Treatment</label>
-            <select
-              name="treatmentId"
-              value={formData.treatmentId}
-              onChange={handleTreatmentChange}
-              required
-            >
-              <option value="">Select Treatment</option>
-              {treatments.map((treatment) => (
-                <option key={treatment.treatmentId} value={treatment.treatmentId}>
-                  {treatment.treatmentName}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {formData.treatmentName && (
             <div className="admin-booking-form-group">
-              <p><strong>Description:</strong> {formData.description}</p>
-              <p><strong>Price:</strong> ${formData.price}</p>
-              <p><strong>Duration:</strong> {formData.duration} minutes</p>
+              <label>Treatment</label>
+              <select
+                name="treatmentId"
+                value={formData.treatmentId}
+                onChange={handleTreatmentChange}
+                required
+              >
+                <option value="">Select Treatment</option>
+                {treatments.map((treatment) => (
+                  <option key={treatment.treatmentId} value={treatment.treatmentId}>
+                    {treatment.treatmentName}
+                  </option>
+                ))}
+              </select>
             </div>
-          )}
 
-          <div className="admin-booking-form-group">
-            <label>Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+            {formData.treatmentName && (
+              <div className="admin-booking-form-group">
+                <p><strong>Description:</strong> {formData.description}</p>
+                <p><strong>Price:</strong> ${formData.price}</p>
+                <p><strong>Duration:</strong> {formData.duration} minutes</p>
+              </div>
+            )}
 
-          <div className="admin-booking-form-group">
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className="admin-booking-form-group">
-            <label>Phone</label>
-            <input
-              type="text"
-              name="phone"
-              value={formData.phone}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className="admin-booking-form-group">
-            <label>Date</label>
-            <input
-              type="date"
-              name="date"
-              value={formData.date}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className="admin-booking-form-group">
-            <label>Time</label>
-            <input
-              type="text"
-              name="time"
-              value={formData.time}
-              onChange={handleInputChange}
-              required
-              placeholder="HH:MM-HH:MM"
-            />
-          </div>
-
-          <div className="admin-booking-form-group">
-            <label>
+            <div className="admin-booking-form-group">
+              <label>Name</label>
               <input
-                type="checkbox"
-                name="payAtSalon"
-                checked={formData.payAtSalon}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    payAtSalon: e.target.checked,
-                  })
-                }
-                disabled
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                required
               />
-              Pay at Salon
-            </label>
-          </div>
+            </div>
 
-          <div className="admin-booking-btn-group">
-          <button type="submit" disabled={isSubmitting} className="admin-booking-btn">
-            {isSubmitting ? 'Submitting...' : 'Create Booking'}
-          </button>
-          <button
-            type="button"
-            onClick={() => navigate('/admin/dashboard')} 
-            className="admin-cancel-btn"
-          >
-            Cancel Booking
-          </button>
-        </div>
+            <div className="admin-booking-form-group">
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
 
-        </form>
+            <div className="admin-booking-form-group">
+              <label>Phone</label>
+              <input
+                type="text"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
 
+            <div className="admin-booking-form-group">
+              <label>Date</label>
+              <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+
+            <div className="admin-booking-form-group">
+              <label>Time</label>
+              <input
+                type="text"
+                name="time"
+                value={formData.time}
+                onChange={handleInputChange}
+                required
+                placeholder="HH:MM"
+              />
+            </div>
+
+            <div className="admin-booking-form-group">
+              <label>
+                <input
+                  type="checkbox"
+                  name="payAtSalon"
+                  checked={formData.payAtSalon}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      payAtSalon: e.target.checked,
+                    })
+                  }
+                  disabled
+                />
+                Pay at Salon
+              </label>
+            </div>
+
+            <div className="admin-booking-btn-group">
+              <button type="submit" disabled={isSubmitting} className="admin-booking-btn">
+                {isSubmitting ? 'Submitting...' : 'Create Booking'}
+              </button>
+              <button
+                type="button"
+                onClick={() => navigate('/admin/dashboard')} 
+                className="admin-cancel-btn"
+              >
+                Cancel Booking
+              </button>
+            </div>
+
+          </form>
         </div>
       </div>
     </div>

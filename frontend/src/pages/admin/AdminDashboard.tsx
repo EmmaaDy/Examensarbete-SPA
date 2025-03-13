@@ -14,6 +14,7 @@ interface Booking {
   price: number;
   status: string;
   paymentMethod: string;
+  staffName: string;
 }
 
 const getTodayDate = () => new Date();
@@ -33,7 +34,6 @@ const AdminDashboard: React.FC = () => {
     // Check if JWT token exists in localStorage
     const token = localStorage.getItem('jwtToken');
     if (!token) {
-
       // If no token exists, redirect user to login page
       navigate('/admin');
     } else {
@@ -69,6 +69,7 @@ const AdminDashboard: React.FC = () => {
           price: parseFloat(booking.price.N),
           status: booking.status ? booking.status.S : 'Pending',
           paymentMethod: booking.paymentMethod ? booking.paymentMethod.S : 'Not Specified',
+          staffName: booking.staffName ? booking.staffName.S : 'Not Assigned', 
         }));
         setBookings(processedBookings);
       } else {
@@ -184,6 +185,7 @@ const AdminDashboard: React.FC = () => {
                     <th>Price</th>
                     <th>Status</th>
                     <th>Payment Method</th>
+                    <th>Staff Member</th> 
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -200,6 +202,7 @@ const AdminDashboard: React.FC = () => {
                           <td>£{booking.price.toFixed(2)}</td>
                           <td>{booking.status}</td>
                           <td>{booking.paymentMethod}</td>
+                          <td>{booking.staffName}</td> 
                           <td>
                             <button onClick={() => toggleStatusOptions(booking.bookingId, 'confirm')}>✔️</button>
                             <button onClick={() => toggleStatusOptions(booking.bookingId, 'cancel')}>❌</button>
@@ -224,7 +227,7 @@ const AdminDashboard: React.FC = () => {
                       ))
                   ) : (
                     <tr>
-                      <td colSpan={8}>No bookings available for {selectedDate.toISOString().split('T')[0]}.</td>
+                      <td colSpan={9}>No bookings available for {selectedDate.toISOString().split('T')[0]}.</td>
                     </tr>
                   )}
                 </tbody>
