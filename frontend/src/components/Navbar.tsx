@@ -16,7 +16,6 @@ const Navbar: React.FC = () => {
           <li><NavLink to="/booking" className={({ isActive }) => isActive ? "active" : ""}>Booking</NavLink></li>
           <li><NavLink to="/contact" className={({ isActive }) => isActive ? "active" : ""}>Contact</NavLink></li>
           <li><NavLink to="/events" className={({ isActive }) => isActive ? "active" : ""}>Events</NavLink></li>
-          <li><NavLink to="/admin" className={({ isActive }) => isActive ? "active" : ""}>Admin Panel</NavLink></li>
         </ul>
 
         <NavLink to="/booking" className="booking-btn">

@@ -72,30 +72,35 @@
 }
 
 .footer-sitemap {
-  position: relative;
-  top: 80px;
+  display: flex;
+  flex-direction: column;
   margin-right: 100px;
+  margin-top: 70px;
+  position: relative;
+  z-index: 10;
 }
 
 .footer-sitemap h4 {
   color: #507061;
+  margin-bottom: 0;
   font-family:'Arial', sans-serif;
-  font-size: 18px;
-  display: flex;
+  font-size: 24px;
 }
 
-.footer-sitemap nav {
+.footer-sitemap ul {
   list-style: none;
   display: flex;
   flex-direction: row;
-  gap: 30px;
+  padding: 0;
+  gap: 40px;
 }
 
 .footer-sitemap a {
   text-decoration: none;
   font-family:'Arial', sans-serif;
   color: #000000;
-  font-weight: lighter; 
+  font-size: 20px;
+  pointer-events: auto !important;
 }
 
 .social-icons {
@@ -121,4 +126,18 @@
   display: flex;
   justify-content: space-around;
   margin-left: -200px;
+}
+
+.admin {
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #507061;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.admin:hover {
+  color: #ff0000;
 }
