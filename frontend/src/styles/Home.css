@@ -1,3 +1,4 @@
+/* Styling for Home Section */
 .home-welcome h1 {
   font-size: 3rem;
   color: #3A5465;
@@ -19,6 +20,7 @@
   align-items: center;  
   max-width: 1200px;  
   margin: 0 auto; 
+  margin-bottom: 6rem;
 }
 
 .home-our-services-text {
@@ -39,7 +41,6 @@
   z-index: -1; 
 }
 
-
 .home-service-image {
   max-width: 50%;
   margin-left: auto;
@@ -52,7 +53,6 @@
   object-fit: cover;
   border-radius: 10px; 
 }
-
 
 .home-our-services h2 {
   font-size: 16px;
@@ -82,32 +82,60 @@
   text-decoration: none; 
   border-radius: 50px; 
   transition: background-color 0.3s ease; 
+  text-transform: uppercase; 
 }
 
 .home-our-services a:hover {
   background-color: #3e5a48; 
 }
 
-
-/* Styling for the image section */
 .home-service-images {
   display: grid;
-  grid-template-columns: repeat(2);
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6rem; 
   max-width: 1200px;
   margin: 0 auto;
+  justify-items: center; 
+  align-items: center; 
+  transform: translateX(90px); 
+}
+
+.home-service-images-background-container {
+  position: relative;
+  width: 80%; 
+  height: auto;
+  display: inline-block; 
 }
 
 .home-service-images img {
-  width: 30%; 
+  width: 100%; 
   height: auto;
-  object-fit: cover;
+  object-fit: cover; 
   border-radius: 10px;
   transition: transform 0.3s ease;
 }
 
-.home-service-images .image-row:nth-child(1) img:nth-child(2) {
-  margin-left: 10%; 
+.home-service-images img:hover {
+  transform: scale(1.05); 
+}
+
+.home-service-images-background-container img {
+  margin-top: 40px; 
+  transition: transform 0.3s ease;
+}
+
+.home-service-images-background-container::before {
+  content: ''; 
+  position: absolute;
+  top: 12rem; 
+  right: 8rem; 
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/Gold.png'); 
+  background-size: cover;
+  background-position: center; 
+  z-index: -1; 
+  border-radius: 10px; 
 }
 
 /* Styling for About Us Section */
@@ -124,7 +152,6 @@
   margin: -90px auto 0; 
   position: relative;
 }
-
 
 .home-about-us-text {
   width: 30%;
@@ -167,13 +194,13 @@
   text-decoration: none;
   border-radius: 50px;
   transition: background-color 0.3s ease;
+  text-transform: uppercase; 
 }
 
 .home-about-us a:hover {
   background-color: #3e5a48;
 }
 
-/* Styling for the image section under About Us */
 .home-about-images {
   display: flex;  
   justify-content: center;  
@@ -200,42 +227,72 @@
 
 
 /* Styling for Our Rooms & Treatments Section */
-.home-rooms-treatments {
-  font-family: Arial, sans-serif;
-  color: #333;
-}
-
 .home-rooms-treatments-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   max-width: 1200px;
   margin: -90px auto 0;
   position: relative;
+  margin-top: 8rem;
+  margin-bottom: 12rem;
 }
 
-.home-rooms-treatments-text {
-  width: 30%;
-  padding-left: 20px;
+.home-rooms-treatments-image-container {
   position: relative;
-  text-align: left;
+  text-align: center; 
+  width: 100%; 
 }
 
 .home-rooms-treatments-image {
-  width: 50%;
-}
-
-.home-rooms-treatments-image img {
-  width: 100%;
+  width: 70%;
   height: auto;
-  object-fit: cover;
+  object-fit: cover; 
   border-radius: 10px;
-  margin-top: 5rem;
   transition: transform 0.3s ease;
 }
 
-.home-rooms-treatments-image img:hover {
+.home-rooms-treatments-image:hover {
   transform: scale(1.05); 
+}
+
+.home-rooms-treatments-book-button-link {
+  position: absolute; 
+  top: 50%;  
+  left: 50%;  
+  transform: translate(-50%, -50%); 
+  background-color: #507061;  
+  color: white;
+  text-decoration: none;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1; 
+  text-transform: uppercase; 
+}
+
+.home-rooms-treatments-book-button-link:hover {
+  background-color: #3e5a48; 
+}
+
+.home-rooms-treatments-image-title {
+  position: absolute;
+  top: 10%; 
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 19px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); 
+  z-index: 1; 
+}
+
+.home-rooms-treatments-text {
+  width: 50%;
+  padding-left: 20px;
+  position: relative;
+  text-align: left;
+  margin-right: 7rem;
 }
 
 .home-rooms-treatments-text::before {
@@ -274,6 +331,7 @@
   text-decoration: none;
   border-radius: 50px;
   transition: background-color 0.3s ease;
+  text-transform: uppercase; 
 }
 
 .home-rooms-treatments a:hover {
@@ -289,6 +347,11 @@
   margin: 50px auto;
 }
 
+.home-room-image-container {
+  position: relative;
+  text-align: center;
+}
+
 .home-room-images img {
   width: 100%;
   height: auto;
@@ -299,6 +362,41 @@
 
 .home-room-images img:hover {
   transform: scale(1.05); 
+}
+
+.home-room-image-overlay {
+  position: absolute;
+  top: 10%; 
+  left: 50%;
+  transform: translateX(-50%); 
+  color: white;
+  z-index: 1; 
+}
+
+.home-room-image-overlay h3 {
+  font-size: 19px;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 1rem; 
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); 
+}
+
+.home-room-book-button-link {
+  display: inline-block;
+  background-color: #507061;
+  color: white;
+  text-decoration: none;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease; 
+}
+
+.home-room-book-button-link:hover {
+  background-color: #3e5a48; 
 }
 
 /* Styling for events */
@@ -320,7 +418,8 @@
   font-size: 20px;
   color: #507061;
 }
-.events-container {
+
+.home-event-item-container {
   display: flex;
   justify-content: space-between; 
   align-items: flex-start; 
@@ -329,7 +428,7 @@
   max-width: 100%; 
 }
 
-.event-item {
+.home-event-item {
   margin: 10px 0;
   text-align: left;
   border-radius: 8px;
@@ -338,7 +437,7 @@
   padding: 15px; 
 }
 
-.event-item:not(:last-child)::after {
+.home-event-item:not(:last-child)::after {
   content: '';
   position: absolute;
   top: 0;
@@ -347,21 +446,22 @@
   width: 2px;
   background-color: #ccc;
 }
-.event-item h1 {
+
+.home-event-item-item h1 {
 color: #507061;
 }
-.event-item h4 {
+
+.home-event-item-item h4 {
   font-size: 18px;
   color: #3A5465;
   margin-bottom: 5px;
 }
 
-.event-item p {
+.home-event-item-item p {
   font-size: 14px;
   color: #3A5465;
   margin-bottom: 5px;
 }
-
 
 .home-events .explore-link {
   display: inline-block;
@@ -386,6 +486,7 @@ color: #507061;
   border-radius: 50px;
   transition: background-color 0.3s ease;
   align-self: flex-end; 
+  text-transform: uppercase; 
 }
 
 .home-event-packages-link:hover {
