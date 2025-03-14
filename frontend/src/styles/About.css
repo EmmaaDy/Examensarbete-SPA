@@ -1,0 +1,63 @@
+.about {
+    font-family: Arial, sans-serif;
+    color: #005e6b;
+    text-align: center; /* Centrera all text i sektionen */
+}
+
+.about-header {
+    text-align: center;
+    padding: 100px 0;
+}
+
+.about-header h1 {
+    font-size: 3rem;
+    color: #005e6b;
+    text-transform: uppercase;
+    font-family: 'Playfair Display', serif;
+    font-weight: 300;
+}
+
+.story {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto; 
+}
+
+
+.story-content {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 50px; 
+    max-width: 1200px; /* Gör hela sektionen bredare */
+    width: 90%; /* Låter layouten anpassa sig bättre */
+    margin-left: 300px; 
+    text-align: left; 
+}
+
+.story-image {
+    height: auto;
+    object-fit: cover;
+}
+.story-leaf {
+    position: absolute;
+    top: 350px;
+    left: 10%;
+    max-width: 150px;
+}
+
+  .story h3 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.story-content p {
+    font-size: 1.4rem;
+    line-height: 1.6;
+}
+
