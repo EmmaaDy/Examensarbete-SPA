@@ -20,46 +20,129 @@
 .story {
     display: flex;
     flex-direction: column;
-    align-items: center; 
-    max-width: 900px;
-    padding-top: 20px;
-    margin-left: 30px;
+    align-items: center;
+    max-width: 1600px; /* Gör hela sektionen bredare */
+    width: 95%;
+    padding: 80px 0; /* Ger luft runt sektionen */
 }
 
-
 .story-content {
-    display: flex;
-    flex-direction: row; 
-    justify-content: center; 
-    align-items: center; 
-    gap: 50px; 
-    max-width: 1200px; /* Gör hela sektionen bredare */
-    width: 90%; /* Låter layouten anpassa sig bättre */
+    display: grid;
+    grid-template-columns: 3fr 1fr; /* Gör texten bredare än bilden */
+    justify-content: center;
+    align-items: center;
+    gap: 100px; /* Större mellanrum mellan text & bild */
+    max-width: 1440px; /* Bredden på innehållet */
+    width: 100%;
     text-align: left;
-    margin-left: 100px;
+    margin-left: 200px;
+}
+
+.story-content img {
+    width: 100%; /* Låt bilden ta hela sin container */
+    max-width: 300px; /* Öka storleken */
+    height: auto; /* Behåller proportionerna */
+    object-fit: cover;
+}
+
+.story-leaf {
+    position: absolute;
+    top: 380px;
+    left: 10px;
+    max-width: 350px;
+}
+
+.story h3 {
+    font-size: 3rem; /* Gör rubriken större */
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 40px;
+    margin-left: -450px;
+}
+
+.story p {
+    font-size: 1.9rem; /* Större text */
+    line-height: 1.8;
+    max-width: 85%;
+}
+
+.vision {
+    position: relative;
+    width: 100vw; /* Full bredd på viewporten */
+    min-height: 500px;
+    height: auto;
+    background-image: url('../assets/vision-bg.png');
+    background-size: cover; /* Täcker hela bredden utan att beskäras */
+    background-position: center;
+    background-repeat: no-repeat;
     margin-bottom: 100px;
 }
 
-.story-image {
-    height: auto;
-    object-fit: cover;
-}
-.story-leaf {
-    position: absolute;
-    top: 350px;
-    left: 0%;
-    max-width: 200px;
+.vision-content {
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+    margin-left: 60px;
 }
 
-  .story h3 {
-    font-size: 2rem;
-    font-weight: 600;
-    margin-left: -100px;
-    padding-top: 30px;
+.visiontext {
+    margin-top: 70px;
 }
 
-.story-content p {
-    font-size: 1.4rem;
-    line-height: 1.6;
+.vision-header {
+    font-size: 3rem; /* Gör rubriken större */
+    font-weight: bold;
+    text-align: center;
+    margin-left: -250px;
 }
 
+.vision-content p {
+    font-size: 1.9rem; /* Större text */
+    line-height: 1.8;
+    max-width: 85%;
+    text-align: left;
+}
+
+.choose {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.choose-header {
+    font-size: 3rem; /* Gör rubriken större */
+    font-weight: bold;
+    text-align: center;
+}
+
+.choose p {
+    padding-left: 10%;
+    font-size: 1.9rem; /* Större text */
+    line-height: 1.8;
+    max-width: 85%;
+    text-align: left;
+}
+
+.button {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 500px;
+    margin-bottom: 150px;
+}
+
+.book-button {
+    display: inline-block;
+    padding: 15px 40px;
+    background-color: #4f6b5b; 
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 50px; /* Ger den rundade formen */
+    text-align: center;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .book-button:hover {
+    background-color: #3d5547; /* Mörkare nyans vid hover */
+  }
