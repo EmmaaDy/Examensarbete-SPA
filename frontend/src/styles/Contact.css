@@ -1,0 +1,34 @@
+.contact-header h1 {
+    font-size: 3rem;
+  color: #3A5465;
+  text-transform: uppercase;
+  font-family: 'Playfair Display', serif;
+  font-weight: 300;
+  margin-top: 13rem;
+  text-align: center;
+}
+
+.contact {
+    font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.contact-get-in-touch {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-get-in-touch h2 {
+    color: #3A5465;
+    font-weight: lighter;
+    text-transform: uppercase;
+}
+
+.contact-get-in-touch .p1 {
+    text-transform: uppercase;
+    color: #3A5465;
+    font-size: larger;
+    margin: 0 540px;
+}
