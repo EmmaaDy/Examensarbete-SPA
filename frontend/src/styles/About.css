@@ -1,6 +1,6 @@
 .about {
     font-family: Arial, sans-serif;
-    color: #005e6b;
+    color: #3A5465;
     text-align: center; /* Centrera all text i sektionen */
 }
 
@@ -11,10 +11,11 @@
 
 .about-header h1 {
     font-size: 3rem;
-    color: #005e6b;
+    color: #3A5465;
     text-transform: uppercase;
     font-family: 'Playfair Display', serif;
     font-weight: 300;
+    margin-top: 8rem;
 }
 
 .story {
