@@ -6,23 +6,23 @@ import { PutItemCommand, ScanCommand } from '@aws-sdk/client-dynamodb';
 
 const employeesTreatments = {
   Victoria: [
-    { treatmentId: '1', name: 'Hydrating Facial', price: 70, duration: 45, category: 'Face Care Treatment' },
-    { treatmentId: '2', name: 'Anti-Aging Facial', price: 75, duration: 60, category: 'Face Care Treatment' },
-  ],
-  Emma: [
-    { treatmentId: '3', name: 'Relaxing Spa Massage', price: 75, duration: 60, category: 'Massage Treatments' },
-    { treatmentId: '4', name: 'Himalayan Salt Massage', price: 85, duration: 60, category: 'Massage Treatments' },
-    { treatmentId: '5', name: 'Deep Tissue Massage', price: 80, duration: 60, category: 'Massage Treatments' },
-  ],
-  Isabella: [
-    { treatmentId: '6', name: 'Body Scrub & Hydration', price: 80, duration: 45, category: 'Body Care Treatments' },
-    { treatmentId: '7', name: 'Aromatherapy Wrap', price: 50, duration: 60, category: 'Body Care Treatments' },
-  ],
-  Olivia: [
-    { treatmentId: '8', name: 'Indoor Sauna Session', price: 50, duration: 60, category: 'Sauna Experiences' },
-    { treatmentId: '9', name: 'Outdoor Sauna Experience', price: 60, duration: 60, category: 'Sauna Experiences' },
-    { treatmentId: '10', name: 'Relax & Bubble Pool', price: 70, duration: 90, category: 'Sauna Experiences' },
-  ],
+    { "treatmentId": "4", "name": "Hydrating Facial", "price": 70, "duration": 45, "category": "Face Care Treatment", "room": "Face Care Treatment" },
+    { "treatmentId": "5", "name": "Anti-Aging Facial", "price": 90, "duration": 60, "category": "Face Care Treatment", "room": "Face Care Treatment" }
+],
+Emma: [
+    { "treatmentId": "1", "name": "Relaxing Spa Massage", "price": 75, "duration": 60, "category": "Massage Treatments", "room": "Massage room" },
+    { "treatmentId": "2", "name": "Himalayan Salt Massage", "price": 85, "duration": 60, "category": "Massage Treatments", "room": "Massage room" },
+    { "treatmentId": "3", "name": "Deep Tissue Massage", "price": 80, "duration": 60, "category": "Massage Treatments", "room": "Massage room" }
+],
+Isabella: [
+    { "treatmentId": "6", "name": "Body Scrub & Hydration", "price": 85, "duration": 60, "category": "Body Care Treatments", "room": "Body Care Treatments" },
+    { "treatmentId": "7", "name": "Aromatherapy Wrap", "price": 80, "duration": 45, "category": "Body Care Treatments", "room": "Body Care Treatments" }
+],
+Olivia: [
+    { "treatmentId": "8", "name": "Indoor Sauna Session", "price": 50, "duration": 60, "category": "Sauna Experiences", "room": "Indoor Sauna" },
+    { "treatmentId": "9", "name": "Outdoor Sauna Experience", "price": 60, "duration": 60, "category": "Sauna Experiences", "room": "Outdoor Sauna" },
+    { "treatmentId": "10", "name": "Relax & Bubble Pool", "price": 70, "duration": 90, "category": "Sauna Experiences", "room": "Bubble Pool & Relax Area" }
+]
 };
 
 export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
@@ -42,24 +42,40 @@ export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGat
       time = '',
       payAtSalon = false,
       paymentMethod = 'Pay at Salon',
+      room = '',  
     } = body;
 
     let employee: string | null = null;
+    let treatmentRoom: string | null = null;  
+
+    // Hitta rätt anställd för behandling och kontrollera om den har rätt rum
     for (const [emp, treatments] of Object.entries(employeesTreatments)) {
       const treatment = treatments.find(t => t.treatmentId === treatmentId);
+      console.log(`Checking employee: ${emp}, Treatment found: ${treatment ? true : false}`);  
       if (treatment && treatment.category === category) {
-        employee = emp;  
+        employee = emp;
+        treatmentRoom = treatment.room; 
         break;
       }
     }
 
-    if (!employee) {
+    if (!employee || !treatmentRoom) {
+      console.log('No matching treatment or employee found.'); 
       return {
         statusCode: 400,
         body: JSON.stringify({ message: 'Invalid treatment ID or treatment not found for any employee.' }),
       };
     }
 
+    // Kontrollera att det rum som skickades med är det rätta
+    if (room !== treatmentRoom) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: `The treatment requires the room: ${treatmentRoom}, but you selected: ${room}` }),
+      };
+    }
+
+    // Validering av tid och datum
     if (!time.match(/^\d{2}:\d{2}$/)) {
       return {
         statusCode: 400,
@@ -87,6 +103,7 @@ export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGat
     const treatmentEndTime = new Date(utcStartTime.getTime() + duration * 60000);
     const cleaningTime = new Date(treatmentEndTime.getTime() + 15 * 60000);
 
+    // Kontrollera om det finns någon bokning som överlappar
     const scanParams = {
       TableName: 'Bookings',
       FilterExpression:
@@ -113,6 +130,7 @@ export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGat
       };
     }
 
+    // Skapa bokning
     const bookingId = uuidv4();
     const bookingStatus = 'Pending';
 
@@ -138,9 +156,11 @@ export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGat
         createdAt: { S: new Date().toISOString() },
         endTime: { S: treatmentEndTime.toISOString() },
         cleaningTime: { S: cleaningTime.toISOString() },
-        employee: { S: employee }, 
+        employee: { S: employee },
+        room: { S: room },  
       },
     };
+
     await db.send(new PutItemCommand(bookingParams));
 
     return {
@@ -156,7 +176,8 @@ export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGat
         email,
         phone,
         paymentMethod,
-        employee, 
+        employee,
+        room, 
       }),
     };
   } catch (error) {

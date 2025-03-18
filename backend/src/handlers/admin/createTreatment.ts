@@ -8,10 +8,57 @@ dotenv.config();
 
 const SECRET_KEY = process.env.JWT_SECRET || 'default_secret_key';
 
+// Fördefinierade rum
+const validRooms = [
+  'Indoor Sauna',
+  'Outdoor Sauna',
+  'Face Care Treatment',
+  'Himalayan Salt Massage',
+  'Massage room',
+  'Bubble Pool & Relax Area'
+];
+
+// Define Treatment type and EmployeesTreatments structure
+type Treatment = {
+  treatmentId: string;
+  name: string;
+  price: number;
+  duration: number;
+  category: string;
+  room: string; 
+};
+
+
+type EmployeesTreatments = {
+  [employee: string]: Treatment[];
+};
+
+const employeesTreatments: EmployeesTreatments = {
+  Victoria: [
+    { treatmentId: '4', name: 'Hydrating Facial', price: 70, duration: 45, category: 'Face Care Treatment', room: 'Face Care Treatment' },
+    { treatmentId: '5', name: 'Anti-Aging Facial', price: 90, duration: 60, category: 'Face Care Treatment', room: 'Face Care Treatment' },
+  ],
+  Emma: [
+    { treatmentId: '1', name: 'Relaxing Spa Massage', price: 75, duration: 60, category: 'Massage Treatments', room: 'Massage room' },
+    { treatmentId: '2', name: 'Himalayan Salt Massage', price: 85, duration: 60, category: 'Massage Treatments', room: 'Massage room' },
+    { treatmentId: '3', name: 'Deep Tissue Massage', price: 80, duration: 60, category: 'Massage Treatments', room: 'Massage room' },
+  ],
+  Isabella: [
+    { treatmentId: '6', name: 'Body Scrub & Hydration', price: 85, duration: 60, category: 'Body Care Treatments', room: 'Body Care Treatments' },
+    { treatmentId: '7', name: 'Aromatherapy Wrap', price: 80, duration: 45, category: 'Body Care Treatments', room: 'Body Care Treatments' },
+  ],
+  Olivia: [
+    { treatmentId: '8', name: 'Indoor Sauna Session', price: 50, duration: 60, category: 'Sauna Experiences', room: 'Indoor Sauna' },
+    { treatmentId: '9', name: 'Outdoor Sauna Experience', price: 60, duration: 60, category: 'Sauna Experiences', room: 'Outdoor Sauna' },
+    { treatmentId: '10', name: 'Relax & Bubble Pool', price: 70, duration: 90, category: 'Sauna Experiences', room: 'Bubble Pool & Relax Area' },
+  ],
+};
+
+
 export const createTreatment = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   try {
-    console.log("Received event:", JSON.stringify(event, null, 2)); // Log the entire event
-    console.log("Full event headers:", event.headers); // Log all headers to see their content
+    console.log("Received event:", JSON.stringify(event, null, 2)); 
+    console.log("Full event headers:", event.headers); 
 
     // Kontrollera om body finns
     if (!event.body) {
@@ -27,7 +74,7 @@ export const createTreatment = async (event: APIGatewayProxyEvent): Promise<APIG
 
     // Extrahera och verifiera JWT-token från Authorization-headern
     const token = event.headers['Authorization']?.split(' ')[1] || event.headers['authorization']?.split(' ')[1];
-    console.log("Authorization token:", token); // Log token for debugging
+    console.log("Authorization token:", token); 
 
     if (!token) {
       console.error("No token provided.");
@@ -41,7 +88,7 @@ export const createTreatment = async (event: APIGatewayProxyEvent): Promise<APIG
     let decoded;
     try {
       decoded = jwt.verify(token, SECRET_KEY) as { username: string, role: string };
-      console.log("Decoded JWT:", decoded); // Log the decoded token
+      console.log("Decoded JWT:", decoded); 
     } catch (error) {
       console.error("Error decoding JWT:", error);
       return {
@@ -72,11 +119,11 @@ export const createTreatment = async (event: APIGatewayProxyEvent): Promise<APIG
       };
     }
 
-    const { treatmentId, treatmentName, description, price, category, duration } = body;
+    const { treatmentId, treatmentName, description, price, category, duration, room } = body;
 
     // Kontrollera att alla nödvändiga fält finns
-    if (!treatmentId || !treatmentName || !description || !price || !category || !duration) {
-      console.error("Missing required fields:", { treatmentId, treatmentName, description, price, category, duration });
+    if (!treatmentId || !treatmentName || !description || !price || !category || !duration || !room) {
+      console.error("Missing required fields:", { treatmentId, treatmentName, description, price, category, duration, room });
       return {
         statusCode: 400,
         body: JSON.stringify({ message: 'Missing required fields' }),
@@ -84,7 +131,7 @@ export const createTreatment = async (event: APIGatewayProxyEvent): Promise<APIG
     }
 
     // Logga värdena på de skickade fälten
-    console.log("Treatment data:", { treatmentId, treatmentName, description, price, category, duration });
+    console.log("Treatment data:", { treatmentId, treatmentName, description, price, category, duration, room });
 
     // Validera att price och duration är siffror
     if (isNaN(price) || isNaN(duration)) {
@@ -95,16 +142,26 @@ export const createTreatment = async (event: APIGatewayProxyEvent): Promise<APIG
       };
     }
 
+    // Kontrollera att det angivna rummet är giltigt
+    if (!validRooms.includes(room)) {
+      console.error("Invalid room specified:", room);
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'Invalid room specified. Valid rooms are: ' + validRooms.join(', ') }),
+      };
+    }
+
     // Förbered DynamoDB-parametrar
     const treatmentParams = {
       TableName: 'Treatments',
       Item: {
         treatmentId: { S: treatmentId },
-        treatmentName: { S: treatmentName }, // Använd treatmentName istället för name
+        treatmentName: { S: treatmentName },
         description: { S: description },
         price: { N: price.toString() },
         category: { S: category },
         duration: { N: duration.toString() },
+        room: { S: room }, 
       },
     };
 
@@ -128,7 +185,7 @@ export const createTreatment = async (event: APIGatewayProxyEvent): Promise<APIG
       statusCode: 201,
       body: JSON.stringify({
         message: 'Treatment created successfully',
-        treatment: { treatmentId, treatmentName, description, price, category, duration },
+        treatment: { treatmentId, treatmentName, description, price, category, duration, room },
       }),
     };
   } catch (error: unknown) {

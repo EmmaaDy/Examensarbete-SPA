@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { db } from '../../services/db'; // Anslut till DynamoDB
+import { db } from '../../services/db'; // Connect to DynamoDB
 import { ScanCommand } from '@aws-sdk/client-dynamodb';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
@@ -10,6 +10,7 @@ const SECRET_KEY = process.env.JWT_SECRET || 'default_secret_key';
 
 export const getAllBookings = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   try {
+    // Extract token from authorization header
     const token = event.headers['Authorization']?.split(' ')[1] || event.headers['authorization']?.split(' ')[1];
     if (!token) {
       return {
@@ -18,6 +19,7 @@ export const getAllBookings = async (event: APIGatewayProxyEvent): Promise<APIGa
       };
     }
 
+    // Verify JWT token
     let decoded;
     try {
       decoded = jwt.verify(token, SECRET_KEY) as { username: string, role: string };
@@ -28,6 +30,7 @@ export const getAllBookings = async (event: APIGatewayProxyEvent): Promise<APIGa
       };
     }
 
+    // Check if the user has admin role
     if (decoded.role !== 'admin') {
       return {
         statusCode: 403,
@@ -35,12 +38,17 @@ export const getAllBookings = async (event: APIGatewayProxyEvent): Promise<APIGa
       };
     }
 
+    // Scan the 'Bookings' table in DynamoDB
     const scanCommand = new ScanCommand({
       TableName: 'Bookings',
     });
 
     const data = await db.send(scanCommand);
 
+    // Debugging: Check and log the raw data received from DynamoDB
+    console.log("DynamoDB scan result:", JSON.stringify(data.Items, null, 2));
+
+    // Check if there are no items in the bookings
     if (!data.Items || data.Items.length === 0) {
       return {
         statusCode: 404,
@@ -48,14 +56,25 @@ export const getAllBookings = async (event: APIGatewayProxyEvent): Promise<APIGa
       };
     }
 
-    const bookings = data.Items.map((item: any) => ({
-      bookingId: item.bookingId.S,
-      treatmentName: item.treatmentName.S,
-      date: item.date.S,
-      time: item.time.S,
-      customerName: item.name.S,
-    }));
+    // Map the DynamoDB data to include additional fields like room, price, paymentMethod, and staffName
+    const bookings = data.Items.map((item: any) => {
+      console.log("Processing item:", JSON.stringify(item, null, 2)); 
 
+      return {
+        bookingId: item.bookingId.S,
+        treatmentName: item.treatmentName.S,
+        customerName: item.name.S,
+        room: item.room?.S || 'General Room', 
+        price: item.price?.N ? parseFloat(item.price.N) : 0, 
+        status: item.status?.S || 'Pending', 
+        paymentMethod: item.paymentMethod?.S || 'Not Specified', 
+        staffName: item.employee?.S || 'Not Assigned', 
+        date: item.date.S,
+        time: item.time.S,
+      };
+    });
+
+    // Return the bookings data
     return {
       statusCode: 200,
       body: JSON.stringify({
