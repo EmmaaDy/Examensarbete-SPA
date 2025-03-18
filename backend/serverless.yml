@@ -93,6 +93,13 @@ functions:
       - httpApi:
           path: /admin/bookings
           method: get
+  
+  getSchedule:
+    handler: src/handlers/admin/getSchedule.getSchedule
+    events:
+      - httpApi:
+          path: /admin/schedule/{username}
+          method: get
 
 resources:
   Resources:
