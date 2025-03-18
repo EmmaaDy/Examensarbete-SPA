@@ -94,7 +94,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr; 
   gap: 2rem; 
-  max-width: 900px;
+  max-width: 1440px;
   margin: 0 auto;
 }
 
@@ -115,7 +115,6 @@
 .contact-map {
   padding: 40px;
   width: 60%;
-  height: auto;
 }
 
 .map-container h2{
@@ -124,33 +123,57 @@
 }
 
 .contact-form {
+  display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
+  margin-bottom: 115px;
 }
 
 .contact-form p {
-  margin-bottom: 20px;
-}
-
-form {
-  gap: 20px;
+  margin-bottom: 17px;
 }
 
 form input, textarea {
   width: 80%;
+  background-color: whitesmoke;
+  color: #000;
+  border-style: none;
+}
+
+form input {
+  margin-bottom: 50px;
+  height: 50px;
+  font-size: medium;
+}
+
+form textarea {
+  height: 80px;
+  font-size: large;
+  margin-bottom: 60px;
+}
+
+form button {
+  width: 60%;
+  height: 45px;
+  background-color: #507061;
+  border-style: none;
+  border-radius: 50px;
+}
+
+form button:hover {
+  background-color: #3e5a48;
 }
 
 .contact-form form {
   display: flex;
+  padding: 20px 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #D1C088;
-  padding: 1.5rem;
   border-radius: 10px;
-  text-align: center;
-  height: 55%;
+  height: 80%;
 }
 
 .contact-form h2 {
