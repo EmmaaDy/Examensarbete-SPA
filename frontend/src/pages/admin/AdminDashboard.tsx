@@ -58,18 +58,19 @@ const AdminDashboard: React.FC = () => {
       );
 
       const data = await response.json();
+      console.log(data)
       if (response.ok) {
         const processedBookings = data.bookings.map((booking: any) => ({
-          bookingId: booking.bookingId.S,
-          treatmentName: booking.treatmentName.S,
-          customerName: booking.name.S,
-          room: booking.category.S,
-          time: booking.time.S,
-          date: booking.date.S,
-          price: parseFloat(booking.price.N),
-          status: booking.status ? booking.status.S : 'Pending',
-          paymentMethod: booking.paymentMethod ? booking.paymentMethod.S : 'Not Specified',
-          staffName: booking.staffName ? booking.staffName.S : 'Not Assigned', 
+          bookingId: booking.bookingId,
+          treatmentName: booking.treatmentName,
+          customerName: booking.customerName,
+          room: booking.room || 'General Room',
+          time: booking.time,
+          date: booking.date,
+          price: booking.price || 0,
+          status: booking.status || 'Pending',
+          paymentMethod: booking.paymentMethod || 'Not Specified',
+          staffName: booking.staffName || 'Not Assigned',
         }));
         setBookings(processedBookings);
       } else {
@@ -77,6 +78,7 @@ const AdminDashboard: React.FC = () => {
       }
     } catch (error) {
       setErrorMessage('Network error occurred.');
+      console.log(error)
     } finally {
       setIsLoading(false);
     }
