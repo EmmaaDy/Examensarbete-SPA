@@ -61,7 +61,7 @@ const Events = () => {
             we offer customized experiences to suit every group size and occasion.
           </p>
           <Link to="/contact">SEND US A REQUEST</Link>
-          <Link to="/event/packages" className='Event-packages'>LEARN MORE ABOUT OUR EVENT PACKAGES</Link>
+          <Link to="/event/packages">LEARN MORE ABOUT OUR EVENT PACKAGES</Link>
           <img src={pattern3} alt="bg-pattern" className='events-bg' />
         </div>
 
