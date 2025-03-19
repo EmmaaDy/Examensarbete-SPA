@@ -1,0 +1,110 @@
+.Event-packages {
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    color: #333;
+    max-width: 1440px;
+    height: auto;
+    padding-bottom: 150px;
+    margin: 0 auto;
+}
+
+.event-packages-header h1 {
+    font-size: 3rem;
+    color: #3A5465;
+    text-transform: uppercase;
+    font-family: 'Playfair Display', serif;
+    font-weight: 300;
+    margin-top: 13rem;
+    margin-bottom: 10rem;
+    text-align: center;
+}
+
+.event-packages-header p {
+    display: flex;
+    justify-content: center; 
+    text-align: center; 
+    color: #3A5465;
+    font-size: 2rem;
+    font-weight: lighter;
+    padding: 0 50px;
+}
+
+.events-packages-leaf {
+    position: absolute;
+    top: 450px;
+    right: 0; 
+    width: 350px;
+    transform: scaleX(-1);
+    z-index: -1;
+}
+
+.events-packages-row1, .events-packages-row2 {
+    margin-top: 150px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-left: 100px;
+}
+
+.events-packages-row2 {
+    margin-top: 50px !important;
+}
+
+.events-packages-row3 {
+    display: flex;
+}
+
+.events-packages-bg {
+    position: absolute;  
+    top: 0;
+    left: 0;
+    width: 110%;
+    height: 110%;
+    z-index: -1;  
+  }
+
+.custom, .corporate, .luxury, .custom-spa-day, .customizable {
+    position: relative;
+    width: 50%;
+    margin-left: 100px;
+    position: relative; 
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    color: #3A5465;
+}
+
+.custom h3, .corporate h3, .luxury h3, .custom-spa-day h3 {
+    font-size: x-large;
+    font-weight: normal;
+}
+
+.custom h4, .corporate h4, .luxury h4, .custom-spa-day h4 {
+    font-size: large;
+    font-weight: lighter;
+}
+
+.custom a, .corporate a, .luxury a, .custom-spa-day a {
+    display: inline-block; 
+    background-color: #507061; 
+    color: white; 
+    padding: 0.8rem 1rem; 
+    border-radius: 50px; 
+    text-decoration: none; 
+    font-weight: lighter;
+    font-size: 1rem;
+    text-align: center;
+  }
+  
+  .custom a:hover, .corporate a:hover, .luxury a:hover, .custom-spa-day a:hover {
+    background-color: #3e5a48;
+  }
+
+  .event-packages-leaf {
+    position: absolute;
+    top: 190%;
+    left: 10px;
+    max-width: 1100px;
+    z-index: 10;
+  }
