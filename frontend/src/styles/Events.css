@@ -72,29 +72,42 @@
     font-weight: lighter;
   }
 
-  .less-stress, .escape, .keep-calm, p {
-    margin-bottom: 30px;
-  }
+.less-stress, .escape, .keep-calm, p {
+  margin-bottom: 30px;
+}
   
-  .less-stress a, .escape a, .keep-calm a, .event-packages a {
-    display: inline-block; 
-    background-color: #507061; 
-    color: white; 
-    padding: 0.8rem 1.5rem; 
-    border-radius: 50px; 
-    text-decoration: none; 
-    font-weight: lighter;
-    font-size: 1rem;
-    text-align: center;
-  }
+.less-stress a, .escape a, .keep-calm a, .event-packages a {
+  display: inline-block; 
+  background-color: #507061; 
+  color: white; 
+  padding: 0.8rem 1.5rem; 
+  border-radius: 50px; 
+  text-decoration: none; 
+  font-weight: lighter;
+  font-size: 1rem;
+  text-align: center;
+}
 
-  .event-packages a {
-    margin-left: 10px;
-    width: 70%;
-    font-size: small;
-  }
+.less-stress a:hover, .escape a:hover, .keep-calm a:hover, .event-packages a:hover {
+  background-color: #3e5a48;
+}
+
+.event-packages a {
+  display: flex;
+  justify-content: center;
+  margin-left: 60px;
+  width: 50%;
+}
+
+.event-packages a:last-of-type {
+  width: 100%;  
+  white-space: nowrap;
+  margin-left: 0; 
+}
+
+
   
-  .less-stress a, .escape a, .keep-calm a {
-    margin-left: 50px;
-    width: 30%;
-  }
+.less-stress a, .escape a, .keep-calm a {
+  margin-left: 50px;
+  width: 30%;
+}
