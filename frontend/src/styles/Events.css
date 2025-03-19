@@ -95,14 +95,14 @@
 .event-packages a {
   display: flex;
   justify-content: center;
-  margin-left: 60px;
-  width: 50%;
+  margin-left: 40px;
+  width: 60%;
 }
 
 .event-packages a:last-of-type {
   width: 100%;  
   white-space: nowrap;
-  margin-left: 0; 
+  margin-left: -20px; 
 }
 
 
