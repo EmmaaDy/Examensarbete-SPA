@@ -13,9 +13,7 @@ import EventPackages from './pages/EventPackages';
 import AdminPanel from './pages/admin/AdminPanel';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminBooking from './pages/admin/AdminBooking';  
-import Schedule from './pages/admin/Schedule'; 
 import Notifications from './pages/admin/Notifications';  
-import Settings from './pages/admin/Settings';  
 
 
 const App = () => {
@@ -29,7 +27,7 @@ const App = () => {
 const MainLayout = () => {
   const location = useLocation();
 
-  const hideLayout = ['/admin', '/admin/dashboard', '/admin/booking', '/admin/schedule', '/admin/notifications', '/admin/settings' ].includes(location.pathname);
+  const hideLayout = ['/admin', '/admin/dashboard', '/admin/booking', '/admin/settings' ].includes(location.pathname);
 
   return (
     <div className="app-container">
@@ -48,9 +46,7 @@ const MainLayout = () => {
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/booking" element={<AdminBooking />} />
-          <Route path="/admin/schedule" element={<Schedule />} />
           <Route path="/admin/notifications" element={<Notifications />} />
-          <Route path="/admin/settings" element={<Settings />} />
         </Routes>
       </main>
       {!hideLayout && <Footer />}

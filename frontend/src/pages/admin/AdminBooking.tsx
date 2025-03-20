@@ -114,10 +114,9 @@ const AdminBooking: React.FC = () => {
         <div className={`admin-dashboard-sidebar ${isMenuOpen ? 'open' : ''}`}>
           <ul>
             <li onClick={() => navigate('/admin/dashboard')}>Dashboard</li>
-            <li onClick={() => navigate('/admin/schedule')}>Schedule</li>
             <li onClick={() => navigate('/admin/booking')}>Booking</li>
             <li onClick={() => navigate('/admin/notifications')}>Notifications</li>
-            <li onClick={() => navigate('/admin/settings')}>Settings</li>
+
           </ul>
         </div>
 
