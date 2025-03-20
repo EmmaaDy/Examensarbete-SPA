@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { db } from '../../services/db'; // Connect to DynamoDB
+import { db } from '../../services/db'; 
 import { ScanCommand } from '@aws-sdk/client-dynamodb';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
@@ -56,7 +56,7 @@ export const getAllBookings = async (event: APIGatewayProxyEvent): Promise<APIGa
       };
     }
 
-    // Map the DynamoDB data to include additional fields like room, price, paymentMethod, and staffName
+    // Map the DynamoDB data to include additional fields like room, price, paymentMethod, staffName, and duration
     const bookings = data.Items.map((item: any) => {
       console.log("Processing item:", JSON.stringify(item, null, 2)); 
 
@@ -64,13 +64,14 @@ export const getAllBookings = async (event: APIGatewayProxyEvent): Promise<APIGa
         bookingId: item.bookingId.S,
         treatmentName: item.treatmentName.S,
         customerName: item.name.S,
-        room: item.room?.S || 'General Room', 
-        price: item.price?.N ? parseFloat(item.price.N) : 0, 
-        status: item.status?.S || 'Pending', 
-        paymentMethod: item.paymentMethod?.S || 'Not Specified', 
-        staffName: item.employee?.S || 'Not Assigned', 
+        room: item.room?.S || 'General Room',
+        price: item.price?.N ? parseFloat(item.price.N) : 0,
+        status: item.status?.S || 'Pending',
+        paymentMethod: item.paymentMethod?.S || 'Not Specified',
+        staffName: item.employee?.S || 'Not Assigned',
         date: item.date.S,
         time: item.time.S,
+        duration: item.duration?.N ? parseInt(item.duration.N) : 0, 
       };
     });
 

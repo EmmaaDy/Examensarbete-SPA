@@ -15,6 +15,7 @@ interface Booking {
   status: string;
   paymentMethod: string;
   staffName: string;
+  duration: number; // Added duration field
 }
 
 const getTodayDate = () => new Date();
@@ -58,7 +59,6 @@ const AdminDashboard: React.FC = () => {
       );
 
       const data = await response.json();
-      console.log(data)
       if (response.ok) {
         const processedBookings = data.bookings.map((booking: any) => ({
           bookingId: booking.bookingId,
@@ -71,14 +71,23 @@ const AdminDashboard: React.FC = () => {
           status: booking.status || 'Pending',
           paymentMethod: booking.paymentMethod || 'Not Specified',
           staffName: booking.staffName || 'Not Assigned',
+          duration: booking.duration || 60, // Set default value for duration
         }));
+
+        // Sort bookings by time (assuming time is in HH:mm format)
+        processedBookings.sort((a: { time: string; }, b: { time: string; }) => {
+          const timeA = a.time.split(':').map(Number); // [HH, mm]
+          const timeB = b.time.split(':').map(Number);
+          return timeA[0] * 60 + timeA[1] - (timeB[0] * 60 + timeB[1]);
+        });
+
         setBookings(processedBookings);
       } else {
         setErrorMessage('Failed to load bookings.');
       }
     } catch (error) {
       setErrorMessage('Network error occurred.');
-      console.log(error)
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -113,8 +122,8 @@ const AdminDashboard: React.FC = () => {
             booking.bookingId === bookingId ? { ...booking, status: newStatus } : booking
           )
         );
-        setOpenBookingId(null); 
-        setStatusType(null);   
+        setOpenBookingId(null);
+        setStatusType(null);
       } else {
         console.error('Failed to update booking status.');
       }
@@ -125,15 +134,15 @@ const AdminDashboard: React.FC = () => {
 
   const toggleStatusOptions = (bookingId: string, type: 'confirm' | 'cancel') => {
     if (openBookingId === bookingId && statusType === type) {
-      setOpenBookingId(null); 
+      setOpenBookingId(null);
       setStatusType(null);
     } else {
-      setOpenBookingId(bookingId); 
+      setOpenBookingId(bookingId);
       setStatusType(type);
     }
   };
 
-  const handleLogout = () => { 
+  const handleLogout = () => {
     localStorage.removeItem('jwtToken');
     navigate('/admin');
   };
@@ -185,9 +194,10 @@ const AdminDashboard: React.FC = () => {
                     <th>Treatment Type</th>
                     <th>Room</th>
                     <th>Price</th>
+                    <th>Duration</th> {/* Added duration column */}
                     <th>Status</th>
                     <th>Payment Method</th>
-                    <th>Staff Member</th> 
+                    <th>Staff Member</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -202,9 +212,10 @@ const AdminDashboard: React.FC = () => {
                           <td>{booking.treatmentName}</td>
                           <td>{booking.room}</td>
                           <td>£{booking.price.toFixed(2)}</td>
+                          <td>{booking.duration} min</td> {/* Display duration */}
                           <td>{booking.status}</td>
                           <td>{booking.paymentMethod}</td>
-                          <td>{booking.staffName}</td> 
+                          <td>{booking.staffName}</td>
                           <td>
                             <button onClick={() => toggleStatusOptions(booking.bookingId, 'confirm')}>✔️</button>
                             <button onClick={() => toggleStatusOptions(booking.bookingId, 'cancel')}>❌</button>
@@ -229,7 +240,7 @@ const AdminDashboard: React.FC = () => {
                       ))
                   ) : (
                     <tr>
-                      <td colSpan={9}>No bookings available for {selectedDate.toISOString().split('T')[0]}.</td>
+                      <td colSpan={10}>No bookings available for {selectedDate.toISOString().split('T')[0]}.</td>
                     </tr>
                   )}
                 </tbody>
