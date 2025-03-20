@@ -52,11 +52,12 @@
 
 .events-packages-row3 {
     display: grid;
+    width: 50%;
     grid-template-columns: 1fr; 
     justify-content: center;
     align-items: center;
     margin-top: 50px;
-    margin-left: 0;
+    margin-left: 400px;
 }
 
 .events-packages-row4 {
@@ -95,8 +96,7 @@
 
 .events-packages-bath {
     position: relative;
-    width: 25%;
-    top: -600px;
+    top: -700px;
     left:-300px;
 }
 
@@ -130,8 +130,7 @@
   }
 
   .customizable a {
-    margin-left: 60px;
-    width: 60%;
+    width: 100%
   }
   
   .custom a:hover, .corporate a:hover, .luxury a:hover, .custom-spa-day a:hover, .customizable a:hover, .booking-your-event a:hover {
@@ -140,7 +139,7 @@
 
   .event-packages-leaf {
     position: absolute;
-    top: 130%;
+    top:160%;
     left: 10px;
     width: 350px;
     z-index: 10;
