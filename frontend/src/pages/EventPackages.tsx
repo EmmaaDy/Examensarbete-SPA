@@ -3,6 +3,7 @@ import '../styles/EventPackages.css'
 import pattern3 from '../assets/green-pattern3.png'
 import leaf from '../assets/leaf.png';
 import topleaf from '../assets/abt-topleaf.png'; 
+import bath from '../assets/relaxing-bath.png';
 
 const EventPackages = () => {
     return (
@@ -116,12 +117,15 @@ const EventPackages = () => {
                 </ul>
                 Prices vary based on customization
             </p>
-            <button>START CUSTOMIZING YOUR EVENT</button>
+            <Link to="/contact">CONTACT US TO CUSTOMIZE YOUR EVENT</Link>
             <img src={pattern3} alt="bg-pattern" className='events-packages-bg' />
+            
           </div>
+          <img src={topleaf} alt="leaf" className='event-packages-leaf2'/> 
+          <img src={bath} alt="bath" className='events-packages-bath' />
         </section>
       </div>
-    );
+  );
   };
   
   export default EventPackages;
