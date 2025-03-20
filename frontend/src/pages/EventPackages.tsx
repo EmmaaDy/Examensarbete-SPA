@@ -4,6 +4,8 @@ import pattern3 from '../assets/green-pattern3.png'
 import leaf from '../assets/leaf.png';
 import topleaf from '../assets/abt-topleaf.png'; 
 import bath from '../assets/relaxing-bath.png';
+import beverage from '../assets/events-beverage.png'
+import setup from '../assets/events-spa-setup.png'
 
 const EventPackages = () => {
     return (
@@ -14,7 +16,7 @@ const EventPackages = () => {
             Whether you're planning a bridal shower, corporate retreat, birthday celebration, or just a day of relaxation with friends,
             we can tailor the perfect experience for your group.
           </p>
-          <img src={leaf} alt="leaf" className='events-packages-leaf' />
+          <img src={leaf} alt="leaf" className='events-packages-headerleaf' />
         </section>
 
         <section className='events-packages-row1'>
@@ -102,7 +104,7 @@ const EventPackages = () => {
           </div>
         </section>
 
-        <section className='events-package-row3'>
+        <section className='events-packages-row3'>
         <div className='customizable'>
             <h3>Customizable Packages</h3>
             <h4 className='description'>If you don’t see what you’re looking for, we can create a fully customizable event package just for you.
@@ -123,6 +125,24 @@ const EventPackages = () => {
           </div>
           <img src={topleaf} alt="leaf" className='event-packages-leaf2'/> 
           <img src={bath} alt="bath" className='events-packages-bath' />
+        </section>
+        
+        <section className='events-packages-row4'>
+          
+          <div className='booking-your-event'>
+            <h3>Booking Your Event</h3>
+            <h4 className='description'>To book or inquire about any of our event packages, please contact us using the form below or reach out directly.
+              Our team will be happy to discuss your needs and help you plan an event that is perfectly tailored to your group.
+            </h4>
+            <Link to="/contact">CONTACT US TO BOOK YOUR EVENT</Link>
+            <img src={pattern3} alt="bg-pattern" className='events-packages-bg' />
+          </div>
+
+          <div className='events-pictures'>
+            <img src={beverage} alt="beverage" className='event-picture1' />
+            <img src={setup} alt="spa-setup" className='event-picture2' />
+            <img src={pattern3} alt="bg-pattern" className='events-packages-bg' />
+          </div>
         </section>
       </div>
   );
