@@ -103,7 +103,6 @@ const Booking = () => {
         <h2>Events</h2>
         <div className="booking-card-events">
           <h3>Customizable Event Packages</h3>
-          <p>Plan your perfect event with our tailored packages, perfect for any occasion.</p>
           <Link to="/event/packages" className="booking-link-events">Learn More About Our Event Packages</Link>
           </div>
       </section>
