@@ -15,7 +15,7 @@ interface Booking {
   status: string;
   paymentMethod: string;
   staffName: string;
-  duration: number; // Added duration field
+  duration: number;
 }
 
 const getTodayDate = () => new Date();
@@ -32,10 +32,8 @@ const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if JWT token exists in localStorage
     const token = localStorage.getItem('jwtToken');
     if (!token) {
-      // If no token exists, redirect user to login page
       navigate('/admin');
     } else {
       setIsAuthenticated(true);
@@ -71,12 +69,11 @@ const AdminDashboard: React.FC = () => {
           status: booking.status || 'Pending',
           paymentMethod: booking.paymentMethod || 'Not Specified',
           staffName: booking.staffName || 'Not Assigned',
-          duration: booking.duration || 60, // Set default value for duration
+          duration: booking.duration || 60,
         }));
 
-        // Sort bookings by time (assuming time is in HH:mm format)
         processedBookings.sort((a: { time: string; }, b: { time: string; }) => {
-          const timeA = a.time.split(':').map(Number); // [HH, mm]
+          const timeA = a.time.split(':').map(Number);
           const timeB = b.time.split(':').map(Number);
           return timeA[0] * 60 + timeA[1] - (timeB[0] * 60 + timeB[1]);
         });
@@ -160,10 +157,8 @@ const AdminDashboard: React.FC = () => {
           <div className={`admin-dashboard-sidebar ${isMenuOpen ? 'open' : ''}`}>
             <ul>
               <li onClick={() => navigate('/admin/dashboard')}>Dashboard</li>
-              <li onClick={() => navigate('/admin/schedule')}>Schedule</li>
               <li onClick={() => navigate('/admin/booking')}>Booking</li>
               <li onClick={() => navigate('/admin/notifications')}>Notifications</li>
-              <li onClick={() => navigate('/admin/settings')}>Settings</li>
             </ul>
           </div>
 
@@ -194,7 +189,7 @@ const AdminDashboard: React.FC = () => {
                     <th>Treatment Type</th>
                     <th>Room</th>
                     <th>Price</th>
-                    <th>Duration</th> {/* Added duration column */}
+                    <th>Duration</th>
                     <th>Status</th>
                     <th>Payment Method</th>
                     <th>Staff Member</th>
@@ -212,7 +207,7 @@ const AdminDashboard: React.FC = () => {
                           <td>{booking.treatmentName}</td>
                           <td>{booking.room}</td>
                           <td>£{booking.price.toFixed(2)}</td>
-                          <td>{booking.duration} min</td> {/* Display duration */}
+                          <td>{booking.duration} min</td>
                           <td>{booking.status}</td>
                           <td>{booking.paymentMethod}</td>
                           <td>{booking.staffName}</td>

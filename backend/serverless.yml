@@ -45,6 +45,13 @@ functions:
           path: /admin/login
           method: post
 
+  getEmployees:
+    handler: src/handlers/admin/getEmployees.getEmployees
+    events:
+      - httpApi:
+          path: /admin/employees
+          method: get
+
   createTreatment:
     handler: src/handlers/admin/createTreatment.createTreatment
     events:
@@ -151,6 +158,17 @@ resources:
             KeyType: "HASH"
         BillingMode: PAY_PER_REQUEST
 
+    EmployeesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Employees
+        AttributeDefinitions:
+          - AttributeName: "employeeId"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "employeeId"
+            KeyType: "HASH"
+        BillingMode: PAY_PER_REQUEST
 
 custom:
   esbuild:
