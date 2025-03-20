@@ -5,10 +5,9 @@ import jwt from 'jsonwebtoken';
 
 const SECRET_KEY = process.env.JWT_SECRET || 'default_secret_key';
 
-// Generera 15-minuters tidsluckor under arbetsdagen
 const generateTimeSlots = (startHour: number, endHour: number): string[] => {
   const timeSlots: string[] = [];
-  for (let hour = startHour; hour < endHour; hour++) {
+  for (let hour = startHour; hour < endHour; hour++) {  
     for (let minute = 0; minute < 60; minute += 15) {
       timeSlots.push(`${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`);
     }
@@ -38,17 +37,14 @@ export const getSchedule = async (event: APIGatewayProxyEvent): Promise<APIGatew
 
     const { employee } = decoded;
 
-    // Fetch bookings data from DB
     const scanCommand = new ScanCommand({ TableName: 'Bookings' });
     const result = await db.send(scanCommand);
 
-    // Generate time slots from 09:00 to 17:00 (including 15-min intervals)
-    const timeSlots = generateTimeSlots(9, 17); 
+    const timeSlots = generateTimeSlots(9, 18);  
 
     let schedule = timeSlots.map(time => {
       let isAvailable = true;
 
-      // Mark lunch break from 12:00 to 13:00 as unavailable
       if (time >= '12:00' && time < '13:00') {
         isAvailable = false;
       }
@@ -63,7 +59,6 @@ export const getSchedule = async (event: APIGatewayProxyEvent): Promise<APIGatew
     if (result.Items) {
       const bookings = result.Items.filter(item => item.employee.S === employee);
 
-      // Update availability based on existing bookings
       bookings.forEach(booking => {
         const bookingTime = booking.time.S;
         const index = schedule.findIndex(slot => slot.time === bookingTime);
