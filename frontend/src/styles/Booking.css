@@ -81,7 +81,8 @@
 }
 
 .booking-card p {
-  font-size: 1rem;
+  font-size: 1.4rem;
+  font-weight: 500;
   color: #607D8B;
   margin: 5px 0;
 }
@@ -96,7 +97,7 @@
   font-weight: bold;
   border-radius: 50px;
   text-align: center;
-  border: 2px solid #4f6b5b;
+  margin-top: 1.5rem;
 }
 
 .booking-button:hover {
@@ -172,7 +173,8 @@
 }
 
 .booking-category-name {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
+  font-weight: bolder;
   margin-bottom: 10px;
   color: #3A5465;
   text-transform: uppercase;
@@ -183,14 +185,14 @@
 }
 
 .booking-treatment-name {
-  font-size: 1.25rem;
+  font-size: 1.47rem;
   margin-bottom: 10px;
   color: #3A5465;
 }
 
 .booking-section-events {
   text-align: center; 
-  padding: 40px 0; 
+  padding: 60px 0; 
 }
 
 .booking-section-events h2 {
@@ -201,6 +203,8 @@
 }
 
 .booking-section-events h3 {
+  font-size: 1.4rem;
+  font-weight: 500;
   color: #607D8B; 
   text-transform: capitalize; 
   margin: 5px; 
@@ -220,7 +224,7 @@
   background-color: #4f6b5b; 
   color: white;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
   border-radius: 50px; 
   text-align: center;
@@ -230,3 +234,21 @@
   background-color: #3e5a48;
 }
 
+.booking-flower-top-right {
+  position: absolute;
+  top: 70%;
+  right: 0%;
+}
+
+.booking-flower-middle-left {
+  position: absolute;
+  top: 130%;
+  left: 0%;
+  transform: scaleX(-1);
+}
+
+.booking-flower-bottom-right {
+  position: absolute;
+  top: 180%;
+  right: 0%;
+}
