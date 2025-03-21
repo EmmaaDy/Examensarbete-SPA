@@ -51,11 +51,11 @@ const Services = () => {
             <h2>Our Services</h2>
             <h3>Your Journey to Relaxation Starts Here</h3>
             <p>
-              Nunc quis eleifend lectus. Donec id semper ligula, ut laoreet orci.
-              Donec tempor vestibulum quam non gravida.
+            Discover our wide range of spa treatments designed to help you relax, refresh, and rejuvenate. 
+            From soothing massages to luxurious facials, find the perfect treatment for you.
             </p>
             <Link to="/booking" className="services-view-more-link">
-              View More
+              View Treatments
             </Link>
           </div>
 
@@ -135,7 +135,7 @@ const Services = () => {
               <p>£75</p>
             </div>
           </div>
-          <Link to="/booking" className="services-explore-link">Explore More</Link>
+          <Link to="/booking" className="services-explore-link">Explore Treatment</Link>
         </div>
         <div className="services-treatment-card">
           <div className="services-treatment-image">
@@ -146,7 +146,7 @@ const Services = () => {
               <p>£70</p>
             </div>
           </div>
-          <Link to="/booking" className="services-explore-link">Explore More</Link>
+          <Link to="/booking" className="services-explore-link">Explore Treatment</Link>
         </div>
         <div className="services-treatment-card">
           <div className="services-treatment-image">
@@ -157,7 +157,7 @@ const Services = () => {
               <p>£80</p>
             </div>
           </div>
-          <Link to="/booking" className="services-explore-link">Explore More</Link>
+          <Link to="/booking" className="services-explore-link">Explore Treatment</Link>
         </div>
       </div>
     </section>
