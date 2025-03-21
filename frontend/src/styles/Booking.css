@@ -96,6 +96,7 @@
   font-size: 16px;
   font-weight: bold;
   border-radius: 50px;
+  border: solid;
   text-align: center;
   margin-top: 1.5rem;
 }
