@@ -1,25 +1,17 @@
-/* General styling for the Home page */
-.home {
-  font-family: Arial, sans-serif;
-  color: #333;
-}
-
-.home-welcome {
-  text-align: center;
-  padding: 50px 0;
-}
-
+/* Styling for Home Section */
 .home-welcome h1 {
   font-size: 3rem;
-  color: #005e6b;
+  color: #3A5465;
   text-transform: uppercase;
   font-family: 'Playfair Display', serif;
   font-weight: 300;
+  margin-top: 13rem;
+  text-align: center;
 }
 
-.home-our-services {
-  padding: 50px 0;
-  background-color: #f4f4f4;
+.home {
+  font-family: Arial, sans-serif;
+  color: #333;
 }
 
 .home-our-services-container {
@@ -28,26 +20,43 @@
   align-items: center;  
   max-width: 1200px;  
   margin: 0 auto; 
+  margin-bottom: 6rem;
 }
 
 .home-our-services-text {
   width: 30%;  
-  padding-right: 20px;  
+  padding-right: 20px;
+  position: relative; 
+}
+
+.home-our-services-text::before {
+  content: ''; 
+  position: absolute;
+  top: -6rem;
+  right: -6rem;
+  width: 150%;
+  height: 150%;
+  background-image: url('../assets/green-pattern2.png'); 
+  background-position: center; 
+  z-index: -1; 
 }
 
 .home-service-image {
-  width: 50%;  
+  max-width: 50%;
+  margin-left: auto;
+  margin-top: -13rem; 
 }
 
 .home-service-image img {
   width: 100%; 
-  height: 100%;  
-  object-fit: cover;  
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px; 
 }
 
 .home-our-services h2 {
   font-size: 16px;
-  color: #333;
+  color: #3A5465;
 }
 
 .home-our-services p {
@@ -60,26 +69,426 @@
   color: #507061;
 }
 
+.home-our-services p {
+  color: #3A5465;
+}
+
 .home-our-services a {
   display: inline-block;
   margin-top: 20px;
-  color: #507061;
-  text-decoration: none;
-  font-weight: bold;
+  padding: 12px 30px; 
+  background-color: #507061; 
+  color: white; 
+  text-decoration: none; 
+  border-radius: 50px; 
+  transition: background-color 0.3s ease; 
+  text-transform: uppercase; 
 }
 
 .home-our-services a:hover {
-  text-decoration: underline;
+  background-color: #3e5a48; 
 }
 
-
-.home-service-image {
-  max-width: 50%;  
-  margin-left: auto; 
+.home-service-images {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6rem; 
+  max-width: 1200px;
+  margin: 0 auto;
+  justify-items: center; 
+  align-items: center; 
+  transform: translateX(90px); 
 }
 
-.home-service-image img {
+.home-service-images-background-container {
+  position: relative;
+  width: 80%; 
+  height: auto;
+  display: inline-block; 
+}
+
+.home-service-images img {
   width: 100%; 
   height: auto;
+  object-fit: cover; 
+  border-radius: 10px;
+  transition: transform 0.3s ease;
 }
 
+.home-service-images img:hover {
+  transform: scale(1.05); 
+}
+
+.home-service-images-background-container img {
+  margin-top: 40px; 
+  transition: transform 0.3s ease;
+}
+
+.home-service-images-background-container::before {
+  content: ''; 
+  position: absolute;
+  top: 12rem; 
+  right: 8rem; 
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/Gold.png'); 
+  background-size: cover;
+  background-position: center; 
+  z-index: -1; 
+  border-radius: 10px; 
+}
+
+/* Styling for About Us Section */
+.home-about-us {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.home-about-us-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  max-width: 1200px;
+  margin: -90px auto 0; 
+  position: relative;
+}
+
+.home-about-us-text {
+  width: 30%;
+  position: relative;
+}
+
+.home-about-us-text::before {
+  content: ''; 
+  position: absolute;
+  top: -6rem;
+  right: -6rem;
+  width: 150%;
+  height: 150%;
+  background-image: url('../assets/green-pattern2.png'); 
+  background-position: center; 
+  z-index: -1; 
+}
+
+.home-about-us h2 {
+  font-size: 16px;
+  color: #3A5465;
+}
+
+.home-about-us h3 {
+  font-size: 40px;
+  color: #507061;
+}
+
+.home-about-us p {
+  font-size: 16px;
+  color: #3A5465;
+}
+
+.home-about-us a {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 30px;
+  background-color: #507061;
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: background-color 0.3s ease;
+  text-transform: uppercase; 
+}
+
+.home-about-us a:hover {
+  background-color: #3e5a48;
+}
+
+.home-about-images {
+  display: flex;  
+  justify-content: center;  
+  align-items: center;  
+  flex-direction: column; 
+  margin: 100px 0;  
+}
+
+.home-about-images hr {
+  width: 80%;  
+  border: 0;  
+  border-top: 1px solid #3A5465;  
+  margin: 30px 0; 
+}
+
+.home-about-images img {
+  max-width: 100%;  
+  height: auto;  
+  object-fit: cover;  
+  border-radius: 10px;  
+  margin-top: 50px; 
+  margin-bottom: 50px; 
+}
+
+
+/* Styling for Our Rooms & Treatments Section */
+.home-rooms-treatments-container {
+  display: flex;
+  max-width: 1200px;
+  margin: -90px auto 0;
+  position: relative;
+  margin-top: 8rem;
+  margin-bottom: 12rem;
+}
+
+.home-rooms-treatments-image-container {
+  position: relative;
+  text-align: center; 
+  width: 100%; 
+}
+
+.home-rooms-treatments-image {
+  width: 70%;
+  height: auto;
+  object-fit: cover; 
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.home-rooms-treatments-image:hover {
+  transform: scale(1.05); 
+}
+
+.home-rooms-treatments-book-button-link {
+  position: absolute; 
+  top: 50%;  
+  left: 50%;  
+  transform: translate(-50%, -50%); 
+  background-color: #507061;  
+  color: white;
+  text-decoration: none;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1; 
+  text-transform: uppercase; 
+}
+
+.home-rooms-treatments-book-button-link:hover {
+  background-color: #3e5a48; 
+}
+
+.home-rooms-treatments-image-title {
+  position: absolute;
+  top: 10%; 
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 19px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); 
+  z-index: 1; 
+}
+
+.home-rooms-treatments-text {
+  width: 50%;
+  padding-left: 20px;
+  position: relative;
+  text-align: left;
+  margin-right: 7rem;
+}
+
+.home-rooms-treatments-text::before {
+  content: ''; 
+  position: absolute;
+  top: -10rem;
+  right: -6rem;
+  width: 150%;
+  height: 150%;
+  background-image: url('../assets/green-pattern2.png'); 
+  background-position: center; 
+  z-index: -1; 
+}
+
+.home-rooms-treatments h2 {
+  font-size: 16px;
+  color: #3A5465;
+}
+
+.home-rooms-treatments h3 {
+  font-size: 40px;
+  color: #507061;
+}
+
+.home-rooms-treatments p {
+  font-size: 16px;
+  color: #3A5465;
+}
+
+.home-rooms-treatments a {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 30px;
+  background-color: #507061;
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: background-color 0.3s ease;
+  text-transform: uppercase; 
+}
+
+.home-rooms-treatments a:hover {
+  background-color: #3e5a48;
+}
+
+/* Styling for Images under "Rooms & Treatments" */
+.home-room-images {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 1200px;
+  margin: 50px auto;
+}
+
+.home-room-image-container {
+  position: relative;
+  text-align: center;
+}
+
+.home-room-images img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.home-room-images img:hover {
+  transform: scale(1.05); 
+}
+
+.home-room-image-overlay {
+  position: absolute;
+  top: 10%; 
+  left: 50%;
+  transform: translateX(-50%); 
+  color: white;
+  z-index: 1; 
+}
+
+.home-room-image-overlay h3 {
+  font-size: 19px;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 1rem; 
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); 
+}
+
+.home-room-book-button-link {
+  display: inline-block;
+  background-color: #507061;
+  color: white;
+  text-decoration: none;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease; 
+}
+
+.home-room-book-button-link:hover {
+  background-color: #3e5a48; 
+}
+
+/* Styling for events */
+.home-events {
+  margin: 50px auto;
+  max-width: 1200px;
+  padding: 0 20px;
+  display: flex; 
+  flex-direction: column; 
+  align-items: flex-start; 
+}
+
+.home-events h2 {
+  font-size: 30px;
+  color: #3A5465;
+}
+
+.home-events p {
+  font-size: 20px;
+  color: #507061;
+}
+
+.home-event-item-container {
+  display: flex;
+  justify-content: space-between; 
+  align-items: flex-start; 
+  margin: 0 auto; 
+  gap: 30px; 
+  max-width: 100%; 
+}
+
+.home-event-item {
+  margin: 10px 0;
+  text-align: left;
+  border-radius: 8px;
+  position: relative;
+  width: 30%; 
+  padding: 15px; 
+}
+
+.home-event-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  width: 2px;
+  background-color: #ccc;
+}
+
+.home-event-item-item h1 {
+color: #507061;
+}
+
+.home-event-item-item h4 {
+  font-size: 18px;
+  color: #3A5465;
+  margin-bottom: 5px;
+}
+
+.home-event-item-item p {
+  font-size: 14px;
+  color: #3A5465;
+  margin-bottom: 5px;
+}
+
+.home-events .explore-link {
+  display: inline-block;
+  margin-top: 15px;
+  color: #507061;
+  text-decoration: none; 
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.home-events .explore-link:hover {
+  color: #3e5a48; 
+}
+
+.home-event-packages-link {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 12px 30px;
+  background-color: #507061;
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: background-color 0.3s ease;
+  align-self: flex-end; 
+  text-transform: uppercase; 
+}
+
+.home-event-packages-link:hover {
+  background-color: #3e5a48;
+}

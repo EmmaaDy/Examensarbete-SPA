@@ -1,0 +1,151 @@
+.Event-packages {
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    max-width: 1440px;
+    height: auto;
+    padding-bottom: 500px;
+    margin: auto;
+}
+
+.event-packages-header h1 {
+    font-size: 3rem;
+    color: #3A5465;
+    text-transform: uppercase;
+    font-family: 'Playfair Display', serif;
+    font-weight: 300;
+    margin-top: 13rem;
+    margin-bottom: 10rem;
+    text-align: center;
+}
+
+.event-packages-header p {
+    display: flex;
+    justify-content: center; 
+    text-align: center; 
+    color: #3A5465;
+    font-size: 2rem;
+    font-weight: lighter;
+}
+
+.events-packages-headerleaf {
+    position: absolute;
+    top: 450px;
+    right: 0; 
+    width: 350px;
+    transform: scaleX(-1);
+    z-index: -1;
+}
+
+.events-packages-row1, .events-packages-row2, .events-packages-row4 {
+    margin-top: 150px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-left: 100px;
+}
+
+.events-packages-row3 {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr; 
+    justify-content: center;
+    align-items: center;
+    margin-top: 150px;
+}
+
+.events-packages-bg {
+    position: absolute;  
+    top: 0;
+    left: -70px;
+    width: 150%;
+    height: 110%;
+    z-index: -1;  
+  }
+
+.custom, .corporate, .luxury, .ultimate, .customizable, .booking-your-event, .events-pictures {
+    position: relative;
+    width: 50%;
+    margin-left: 100px;
+    position: relative; 
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    color: #3A5465;
+}
+
+.customizable {
+    margin-left: 70%; 
+}
+
+.events-packages-bath {
+    position: relative;
+    width: 50%;
+    top: -10px;
+    left:-700px;
+}
+
+.custom h3, .corporate h3, .luxury h3, .ultimate h3, .customizable h3, .booking-your-event h3 {
+    margin-top: 50px;
+    font-size: x-large;    
+}
+
+.custom h4, .corporate h4, .luxury h4, .ultimate h4, .customizable h4, .booking-your-event h4 {
+    font-size: larger;
+    font-weight: normal;
+}
+
+.custom p, .corporate p, .luxury p, .ultimate p, .customizable p, .booking-your-event p {
+    font-size: large;
+    font-weight: lighter;
+}
+
+.custom a, .corporate a, .luxury a, .ultimate a, .customizable a, .booking-your-event a {
+    display: inline-block; 
+    background-color: #507061; 
+    color: white; 
+    padding: 0.8rem 1rem;
+    margin-top: 50px; 
+    border-radius: 50px; 
+    text-decoration: none; 
+    font-weight: lighter;
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .customizable a {
+    width: 100%
+  }
+  
+  .custom a:hover, .corporate a:hover, .luxury a:hover, .ultimate a:hover, .customizable a:hover, .booking-your-event a:hover {
+    background-color: #3e5a48;
+  }
+
+  .event-packages-leaf {
+    position: absolute;
+    top:160%;
+    left: 10px;
+    width: 350px;
+    z-index: 10;
+  }
+
+  .event-packages-leaf2 {
+    position: absolute;
+    top: 185%;
+    right: -40px;
+    width: 350px;
+    transform: scaleX(-1);
+}
+
+.event-picture1, .event-picture2 {
+    position: relative;
+}
+
+.event-picture1 {
+    right: -250px;
+    margin-bottom: -100px; 
+}
+
+.event-picture2 {
+    left: -100px;
+}

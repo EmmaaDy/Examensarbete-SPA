@@ -2,93 +2,184 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { db } from '../services/db';
 import { v4 as uuidv4 } from 'uuid';
 import { handleError } from '../services/errorHandler';
-import { GetItemCommand, PutItemCommand, ScanCommand } from '@aws-sdk/client-dynamodb';
+import { PutItemCommand, ScanCommand } from '@aws-sdk/client-dynamodb';
 
-// Funktion för att skapa en ny bokning
+const employeesTreatments = {
+  Victoria: [
+    { "treatmentId": "4", "name": "Hydrating Facial", "price": 70, "duration": 45, "category": "Face Care Treatment", "room": "Face Care Treatment" },
+    { "treatmentId": "5", "name": "Anti-Aging Facial", "price": 90, "duration": 60, "category": "Face Care Treatment", "room": "Face Care Treatment" }
+  ],
+  Emma: [
+    { "treatmentId": "1", "name": "Relaxing Spa Massage", "price": 75, "duration": 60, "category": "Massage Treatments", "room": "Massage Room" },
+    { "treatmentId": "2", "name": "Himalayan Salt Massage", "price": 85, "duration": 60, "category": "Massage Treatments", "room": "Massage Room" },
+    { "treatmentId": "3", "name": "Deep Tissue Massage", "price": 80, "duration": 60, "category": "Massage Treatments", "room": "Massage Room" }
+  ],
+  Isabella: [
+    { "treatmentId": "6", "name": "Body Scrub & Hydration", "price": 85, "duration": 60, "category": "Body Care Treatments", "room": "Body Care Treatments" },
+    { "treatmentId": "7", "name": "Aromatherapy Wrap", "price": 80, "duration": 45, "category": "Body Care Treatments", "room": "Body Care Treatments" }
+  ],
+  Olivia: [
+    { "treatmentId": "8", "name": "Indoor Sauna Session", "price": 50, "duration": 60, "category": "Sauna Experiences", "room": "Indoor Sauna" },
+    { "treatmentId": "9", "name": "Outdoor Sauna Experience", "price": 60, "duration": 60, "category": "Sauna Experiences", "room": "Outdoor Sauna" },
+    { "treatmentId": "10", "name": "Relax & Bubble Pool", "price": 70, "duration": 90, "category": "Sauna Experiences", "room": "Bubble Pool & Relax Area" }
+  ]
+};
+
+type TreatmentCategory = 'Face Care Treatment' | 'Massage Treatments' | 'Body Care Treatments' | 'Sauna Experiences';
+
+const maxPeoplePerCategory: Record<TreatmentCategory, number> = {
+  "Face Care Treatment": 1,
+  "Massage Treatments": 2,
+  "Body Care Treatments": 1,
+  "Sauna Experiences": 10
+};
+
 export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   try {
     const body = JSON.parse(event.body || '{}');
-    let { treatmentId, treatmentName, description, price, duration, category, name, email, phone, date, time, payAtSalon, paymentMethod } = body;
+    const {
+      treatmentId = '',
+      treatmentName = '',
+      description = '',
+      price = 0,
+      duration = 0,
+      category = '',
+      name = '',
+      email = '',
+      phone = '',
+      date = '',
+      time = '',
+      payAtSalon = false,
+      paymentMethod = 'Pay at Salon',
+      room = '',
+      comment = '', 
+      numberOfPeople = 1, 
+    } = body;
 
-    // Validering av inkommande data
-    treatmentId = treatmentId ?? '';
-    treatmentName = treatmentName ?? '';
-    description = description ?? '';
-    price = price ?? 0;
-    duration = duration ?? 0;
-    category = category ?? '';
-    name = name ?? '';
-    email = email ?? '';
-    phone = phone ?? '';
-    date = date ?? '';
-    time = time ?? '';
-    payAtSalon = payAtSalon ?? false;
-    paymentMethod = paymentMethod ?? 'Pay at Salon'; // Default till 'Pay at Salon' om inte annat anges
+    // Type cast category to TreatmentCategory
+    const categoryTyped = category as TreatmentCategory;
 
-    // Kontrollera värdet för paymentMethod och logga för felsökning
-    console.log("Received paymentMethod: ", paymentMethod);
-
-    if (payAtSalon !== true && payAtSalon !== false) {
+    // Check the max allowed number of people for the given category
+    const maxPeople = maxPeoplePerCategory[categoryTyped];
+    if (numberOfPeople > maxPeople) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ message: 'Invalid payment method' }),
+        body: JSON.stringify({ message: `The maximum number of people for this category (${category}) is ${maxPeople}.` }),
       };
     }
 
-    // Tolkning och validering av tidsformat
-    const timeParts = time.split('-');
-    if (timeParts.length !== 2) {
+    let employee: string | null = null;
+    let treatmentRoom: string | null = null;
+
+    // Find the correct employee and treatment
+    for (const [emp, treatments] of Object.entries(employeesTreatments)) {
+      const treatment = treatments.find(t => t.treatmentId === treatmentId);
+      if (treatment && treatment.category === category) {
+        employee = emp;
+        treatmentRoom = treatment.room;
+        break;
+      }
+    }
+
+    if (!employee || !treatmentRoom) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ message: 'Invalid time format' }),
+        body: JSON.stringify({ message: 'Invalid treatment ID or treatment not found for any employee.' }),
       };
     }
 
-    const startTimeStr = `${date}T${timeParts[0]}:00Z`;
-    const endTimeStr = `${date}T${timeParts[1].replace('.', ':')}:00Z`;
-
-    const startTime = new Date(startTimeStr);
-    const endTime = new Date(endTimeStr);
-
-    if (isNaN(startTime.getTime()) || isNaN(endTime.getTime())) {
+    // Validate room
+    if (room !== treatmentRoom) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ message: 'Invalid date or time format' }),
+        body: JSON.stringify({ message: `The treatment requires the room: ${treatmentRoom}, but you selected: ${room}` }),
       };
     }
 
-    // Beräkna sluttid inklusive städtid
-    const treatmentEndTime = new Date(startTime.getTime() + duration * 60000); // Lägg till behandlingens varaktighet (i ms)
-    const cleaningTime = new Date(treatmentEndTime.getTime() + 15 * 60000); // Lägg till 15 min städtid
+    // Validate date and time
+    const localStartTime = new Date(`${date}T${time}`);
+    if (isNaN(localStartTime.getTime())) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'Invalid date or time format.' }),
+      };
+    }
+    const utcStartTime = new Date(localStartTime.getTime() - localStartTime.getTimezoneOffset() * 60000);
 
-    // Kontrollera om bokningen redan finns
+    const currentTime = new Date();
+    if (utcStartTime <= currentTime) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'You cannot book a time in the past.' }),
+      };
+    }
+
+    // Lunch break check
+    const lunchStartTime = new Date(`${date}T12:00:00`);
+    const lunchEndTime = new Date(`${date}T13:00:00`);
+    if (localStartTime >= lunchStartTime && localStartTime < lunchEndTime) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'The selected time slot is within the lunch break (12:00 - 13:00). Please select a different time.' }),
+      };
+    }
+
+    // Calculate the end time of the treatment
+    const treatmentEndTime = new Date(localStartTime.getTime() + duration * 60000);
+    const cleaningTime = new Date(treatmentEndTime.getTime() + 15 * 60000);
+
+    // Define the salon's closing time (17:45)
+    const closingTime = new Date(`${date}T17:45:00`);
+
+    // Check that the treatment does not end after closing time
+    if (treatmentEndTime > closingTime) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'The treatment cannot end later than the closing time of 17:45.' }),
+      };
+    }
+
+    // Check for overlapping bookings
     const scanParams = {
       TableName: 'Bookings',
-      FilterExpression: '#date = :date AND ((#time BETWEEN :startTime AND :endTime) OR (#time BETWEEN :cleanStartTime AND :cleanEndTime))',
+      FilterExpression: '#date = :date AND #room = :room AND ((' +
+        ':startTime BETWEEN #startTime AND #endTime) OR ' +
+        '(:endTime BETWEEN #startTime AND #endTime))',
       ExpressionAttributeNames: {
         '#date': 'date',
-        '#time': 'time',
+        '#room': 'room',
+        '#startTime': 'time',
+        '#endTime': 'endTime',
       },
       ExpressionAttributeValues: {
         ':date': { S: date },
-        ':startTime': { S: startTime.toISOString() }, // Starttid för behandling
-        ':endTime': { S: treatmentEndTime.toISOString() }, // Sluttid för behandling
-        ':cleanStartTime': { S: cleaningTime.toISOString() }, // Starttid för städtid
-        ':cleanEndTime': { S: cleaningTime.toISOString() }, // Sluttid för städtid
+        ':room': { S: room },
+        ':startTime': { S: localStartTime.toISOString() },
+        ':endTime': { S: treatmentEndTime.toISOString() },
       },
     };
+
+    // Perform scan to check for overlaps
     const result = await db.send(new ScanCommand(scanParams));
 
     if (result.Items && result.Items.length > 0) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ message: 'The selected time slot is already taken' }),
+        body: JSON.stringify({ message: 'The selected time slot for this treatment is already taken or overlaps with another booking.' }),
       };
     }
 
-    // Skapa bokningen
+    // Adjust price based on the number of people
+    const additionalPricePerPerson = 10; 
+    const totalPrice = price + (numberOfPeople - 1) * additionalPricePerPerson;
+
+    // Create the booking
     const bookingId = uuidv4();
-    const bookingStatus = 'Pending';  // Sätt status till Pending vid bokning
+    const bookingStatus = 'Pending';
+
+    // Format time
+    const localTimeFormatted = `${localStartTime.getHours().toString().padStart(2, '0')}:${localStartTime.getMinutes().toString().padStart(2, '0')}`;
+
     const bookingParams = {
       TableName: 'Bookings',
       Item: {
@@ -97,58 +188,44 @@ export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGat
         treatmentName: { S: treatmentName },
         description: { S: description },
         category: { S: category },
-        price: { N: price.toString() },
+        price: { N: totalPrice.toString() },
         duration: { N: duration.toString() },
         name: { S: name },
         email: { S: email },
         phone: { S: phone },
         date: { S: date },
-        time: { S: time },
+        time: { S: localTimeFormatted },
         status: { S: bookingStatus },
         paymentMethod: { S: paymentMethod },
         createdAt: { S: new Date().toISOString() },
-        endTime: { S: treatmentEndTime.toISOString() }, // Spara sluttiden för bokningen
-        cleaningTime: { S: cleaningTime.toISOString() }, // Spara städtiden för bokningen
+        endTime: { S: treatmentEndTime.toISOString() },
+        cleaningTime: { S: cleaningTime.toISOString() },
+        employee: { S: employee },
+        room: { S: room },
+        comment: { S: comment },
+        numberOfPeople: { N: numberOfPeople.toString() },
       },
     };
 
     await db.send(new PutItemCommand(bookingParams));
 
-    // Skapa betalningen
-    const paymentId = uuidv4();
-    let paymentStatus = 'Completed'; // Standard status om inte "Pay at Salon"
-    if (paymentMethod && paymentMethod.toLowerCase() === 'pay at salon') {
-      paymentStatus = 'Pending'; // Om betalmetoden är "Pay at Salon", sätt statusen till Pending
-    }
-
-    const paymentParams = {
-      TableName: 'PaymentTransactions',
-      Item: {
-        paymentId: { S: paymentId },
-        bookingId: { S: bookingId },
-        amount: { N: price.toString() },
-        paymentMethod: { S: paymentMethod },
-        status: { S: paymentStatus },
-        createdAt: { S: new Date().toISOString() },
-      },
-    };
-
-    await db.send(new PutItemCommand(paymentParams));
-
     return {
       statusCode: 201,
       body: JSON.stringify({
-        message: 'Booking and payment created successfully',
+        message: 'Booking created successfully.',
         bookingId,
-        paymentId,
         treatmentName,
-        price,
+        price: totalPrice,
         date,
-        time,
+        time: localTimeFormatted,
         customerName: name,
         email,
         phone,
         paymentMethod,
+        employee,
+        room,
+        comment,
+        numberOfPeople,
       }),
     };
   } catch (error) {

@@ -1,0 +1,255 @@
+.booking-welcome h1 {
+  font-size: 3rem;
+  color: #3A5465;
+  text-transform: uppercase;
+  font-family: 'Playfair Display', serif;
+  font-weight: 300;
+  margin-top: 13rem;
+  text-align: center;
+}
+
+.booking {
+  color: #3A5465;
+  text-align: center;
+}
+
+.booking-message {
+  position: relative;
+  margin-bottom: 20px;
+  right: -40px;
+  font-size: 1rem;
+  color: #607D8B;
+  padding: 10px 15px;
+  border-radius: 0 8px 8px 0;
+  transform: rotate(-10deg);
+  transform-origin: left;
+  max-width: 18rem;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #3A5465;
+}
+
+.booking-contact-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 30px;
+  background-color: #507061;
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: background-color 0.3s ease;
+  text-transform: uppercase;
+}
+
+.booking-contact-link:hover {
+  background-color: #3e5a48;
+}
+
+.booking-section {
+  position: relative;
+  padding: 20px;
+  background-image: url('../assets/green-pattern2.png');
+  background-size: contain;
+  background-repeat: repeat-y;
+  background-position: top center;
+  border-radius: 8px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.booking-section h2 {
+  font-size: 2rem;
+  color: #3A5465;
+  margin-bottom: 20px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.booking-card {
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px auto;
+  max-width: 500px;
+  text-align: center;
+}
+
+.booking-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #3A5465;
+  text-transform: uppercase;
+}
+
+.booking-card p {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #607D8B;
+  margin: 5px 0;
+}
+
+.booking-button {
+  display: inline-block;
+  padding: 15px 40px;
+  background-color: #4f6b5b;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 50px;
+  border: solid;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.booking-button:hover {
+  background-color: #3e5a48;
+}
+
+.selected-treatment {
+  margin-top: 20px;
+  background-color: #e9f5f1;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #4f6b5b;
+  margin-bottom: 30px;
+}
+
+.selected-treatment p {
+  font-size: 1.2rem;
+  color: #3A5465;
+}
+
+.remove-treatment-button {
+  padding: 10px 30px;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 50px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.remove-treatment-button:hover {
+  background-color: #c0392b;
+}
+
+.booking-form-section {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f3f3f3;
+  border-radius: 8px;
+  max-width: 800px;
+  margin: 20px auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.booking-form input {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.booking-form button {
+  display: inline-block;
+  padding: 15px 40px;
+  background-color: #4f6b5b;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 50px;
+  text-align: center;
+  border: 2px solid #4f6b5b;
+  width: 100%;
+  max-width: 500px;
+}
+
+.booking-form button:hover {
+  background-color: #3e5a48;
+}
+
+.booking-category-name {
+  font-size: 1.6rem;
+  font-weight: bolder;
+  margin-bottom: 10px;
+  color: #3A5465;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;     
+  text-align: center;      
+}
+
+.booking-treatment-name {
+  font-size: 1.47rem;
+  margin-bottom: 10px;
+  color: #3A5465;
+}
+
+.booking-section-events {
+  text-align: center; 
+  padding: 60px 0; 
+}
+
+.booking-section-events h2 {
+  font-size: 2.5rem; 
+  color: #2a3d4f; 
+  text-transform: uppercase; 
+  margin: 0; 
+}
+
+.booking-section-events h3 {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #607D8B; 
+  text-transform: capitalize; 
+  margin: 5px; 
+}
+
+.booking-card-events {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.booking-link-events {
+  display: inline-block;
+  padding: 15px 40px;
+  background-color: #4f6b5b; 
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 50px; 
+  text-align: center;
+}
+
+.booking-link-events:hover {
+  background-color: #3e5a48;
+}
+
+.booking-flower-top-right {
+  position: absolute;
+  top: 70%;
+  right: 0%;
+}
+
+.booking-flower-middle-left {
+  position: absolute;
+  top: 130%;
+  left: 0%;
+  transform: scaleX(-1);
+}
+
+.booking-flower-bottom-right {
+  position: absolute;
+  top: 180%;
+  right: 0%;
+}

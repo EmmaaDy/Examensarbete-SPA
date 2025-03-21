@@ -1,0 +1,256 @@
+/* Förhindra horisontell scroll på hela sidan */
+body {
+  overflow-x: hidden;
+}
+
+/* Styling for Services Section */
+.services-welcome h1 {
+  font-size: 3rem;
+  color: #3A5465;
+  text-transform: uppercase;
+  font-family: 'Playfair Display', serif;
+  font-weight: 300;
+  margin-top: 13rem;
+  margin-bottom: -11rem; 
+  text-align: center;
+}
+
+.services {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.services-our-services-container {
+  display: flex;  
+  justify-content: space-between;  
+  align-items: center;  
+  max-width: 1200px;  
+  margin: -2rem auto 6rem; 
+}
+
+.services-our-services-text {
+  width: 30%;  
+  padding-right: 20px;
+  position: relative; 
+}
+
+.services-our-services-text::before {
+  content: ''; 
+  position: absolute;
+  top: -6rem;
+  right: -6rem;
+  width: 150%;
+  height: 150%;
+  background-image: url('../assets/green-pattern2.png'); 
+  background-position: center; 
+  z-index: -1; 
+}
+
+.services-service-image {
+  max-width: 50%;
+  margin-left: auto;
+}
+
+.services-service-image img {
+  width: 100%; 
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px; 
+}
+
+.services-our-services h2 {
+  font-size: 16px;
+  color: #3A5465;
+}
+
+.services-our-services p {
+  font-size: 16px;
+  color: #555;
+}
+
+.services-our-services h3 {
+  font-size: 40px;
+  color: #507061;
+}
+
+.services-our-services p {
+  color: #3A5465;
+}
+
+.services-our-services a {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 30px; 
+  background-color: #507061; 
+  color: white; 
+  text-decoration: none; 
+  border-radius: 50px; 
+  transition: background-color 0.3s ease; 
+  text-transform: uppercase; 
+}
+
+.services-our-services a:hover {
+  background-color: #3e5a48; 
+}
+
+/* services-rooms-treatments */
+.services-rooms-treatments {
+  text-align: center; 
+  margin: 3rem auto; 
+  font-family: 'Playfair Display', serif;
+}
+
+.services-rooms-treatments p {
+  font-size: 1.2rem;
+  color: #507061;
+  font-style: italic;
+}
+
+.services-rooms-treatments h2 {
+  font-size: 2rem;
+  color: #3A5465;
+  margin-bottom: 5rem;
+  text-transform: uppercase;
+}
+
+/* Carusel */
+.services-room-card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 350px; 
+  margin: 0 10px; 
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 20px;
+  min-height: 750px;
+}
+
+.services-room-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.services-room-card img {
+  width: 100%;  
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 15px; 
+}
+
+.services-room-card h3 {
+  font-size: 1.6rem;
+  color: #507061;
+  margin-bottom: 15px;
+}
+
+.services-room-card p {
+  font-size: 1rem;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.services-room-card .services-book-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 30px; 
+  background-color: #507061; 
+  color: white; 
+  text-decoration: none; 
+  border-radius: 50px; 
+  transition: background-color 0.3s ease; 
+  text-transform: uppercase;
+}
+
+.services-room-card .services-book-link:hover {
+  background-color: #3e5a48;
+}
+
+/* New Text Section Styles */
+.services-text-section {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.services-text-section h2 {
+  font-size: 2rem;
+  color: #3A5465;
+  margin-bottom: 4rem;
+  text-transform: uppercase;
+  letter-spacing: -1px; 
+  max-width: 20rem;     
+  margin-left: auto;    
+  margin-right: auto;   
+}
+
+
+.services-treatments-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.services-treatment-card {
+  width: 100%;
+  max-width: 350px;
+}
+
+.services-treatment-image {
+  position: relative;
+  width: 100%;
+  height: 500px; 
+  overflow: hidden;
+  border-radius: 8px; 
+  margin-bottom: 20px;
+  transition: transform 0.3s ease; 
+}
+
+.services-treatment-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.3s ease; 
+}
+
+.services-treatment-image:hover img {
+  filter: blur(5px); 
+}
+
+.services-treatment-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 1.2rem;
+  width: 100%; 
+  padding: 0 10px;
+  z-index: 1;
+}
+
+.services-treatment-text h3 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.services-treatment-text p {
+  margin: 5px 0;
+}
+
+.services-explore-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 30px; 
+  background-color: #507061; 
+  color: white; 
+  text-decoration: none; 
+  border-radius: 50px; 
+  transition: background-color 0.3s ease; 
+  text-transform: uppercase; 
+}
+
+.services-explore-link:hover {
+  background-color: #3e5a48;
+}

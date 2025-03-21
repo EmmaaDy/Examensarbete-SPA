@@ -1,34 +1,27 @@
-import { useState } from 'react';
-import { Link  } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import Logo from '../assets/Logo.svg'
 import '../styles/Navbar.css';
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
+const Navbar: React.FC = () => {
   return (
-    <nav className={`navbar ${isOpen ? 'open' : ''}`}>
-      {/* Hamburgarikonen */}
-      <div className="hamburger" onClick={toggleMenu}>
-        <span className="bar"></span>
-        <span className="bar"></span>
-        <span className="bar"></span>
-      </div>
-
-      {/* Navigeringsmenyn som kommer från vänster */}
-      <div className={`side-menu ${isOpen ? 'active' : ''}`}>
+    <nav className="navbar">
+      <div className="nav-container">
+        <div className="logo">
+        <img src={Logo} alt="Logo" />
+        </div>
         <ul className="nav-links">
-          <li><Link to="/" onClick={toggleMenu}>Home</Link></li>
-          <li><Link to="/about" onClick={toggleMenu}>About</Link></li>
-          <li><Link to="/services" onClick={toggleMenu}>Services</Link></li>
-          <li><Link to="/booking" onClick={toggleMenu}>Booking</Link></li>
-          <li><Link to="/contact" onClick={toggleMenu}>Contact</Link></li>
-          <li><Link to="/events" onClick={toggleMenu}>Events</Link></li>
-          <li><Link to="/admin" onClick={toggleMenu}>Admin Panel</Link></li>
+          <li><NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>Home</NavLink></li>
+          <li><NavLink to="/about" className={({ isActive }) => isActive ? "active" : ""}>About</NavLink></li>
+          <li><NavLink to="/services" className={({ isActive }) => isActive ? "active" : ""}>Services</NavLink></li>
+          <li><NavLink to="/booking" className={({ isActive }) => isActive ? "active" : ""}>Booking</NavLink></li>
+          <li><NavLink to="/contact" className={({ isActive }) => isActive ? "active" : ""}>Contact</NavLink></li>
+          <li><NavLink to="/events" className={({ isActive }) => isActive ? "active" : ""}>Events</NavLink></li>
         </ul>
+
+        <NavLink to="/booking" className="booking-btn">
+          Booking
+        </NavLink>
+
       </div>
     </nav>
   );

@@ -1,0 +1,149 @@
+.footer {
+  position: relative;
+  width: 100%;
+  height: auto; 
+  background-image: url('../assets/Footer-background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.footer-leaf {
+  position: absolute;
+  top: -175px;
+  left: 9px;
+  width: 250px;
+}
+
+.footer-bottom-decorations {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  height: 350px; 
+  overflow: hidden; 
+}
+
+.footer-pattern {
+  position: absolute;
+  width: 350px;
+  height: auto;
+  opacity: 1;
+  mix-blend-mode: multiply;
+}
+
+.pattern-left {
+  top: 0;
+  left: 0;
+}
+
+.pattern-right {
+  bottom: -80px;
+  right: -100px;
+}
+
+.footer-flower {
+  position: absolute;
+  bottom: -10px;
+  right: 1%;
+  width: auto;
+  z-index: 20;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row; 
+  align-items: flex-start;
+}
+
+.tagline {
+  max-width: 500px;
+  margin-top: 25px;
+  margin-left: 30px;
+  color: #507061;
+  text-transform: uppercase;
+  font-family:'Arial', sans-serif;
+  font-size: x-large;
+  line-height: 45px;
+}
+
+.tagline h1 {
+  font-weight: lighter;
+}
+
+.footer-sitemap {
+  display: flex;
+  flex-direction: column;
+  margin-right: 100px;
+  margin-top: 70px;
+  position: relative;
+  z-index: 10;
+}
+
+.footer-sitemap h4 {
+  color: #507061;
+  margin-bottom: 0;
+  font-family:'Arial', sans-serif;
+  font-size: 24px;
+}
+
+.footer-sitemap ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  gap: 40px;
+}
+
+.footer-sitemap a {
+  text-decoration: none;
+  font-family:'Arial', sans-serif;
+  color: #000000;
+  font-size: 20px;
+  pointer-events: auto !important;
+}
+
+.social-icons {
+  display: flex;
+  margin-left: 30px;
+}
+
+.icon {
+  font-size: 24px; 
+  color: #333;
+  opacity: 0.5; 
+  margin-right: 30px;
+}
+
+.divider {
+  width: 95%;
+  height: 1px;
+  background-color: black;
+  margin: 10px 30px;
+}
+
+.under-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: auto;
+  max-width: 1440px;
+  padding: 10px;
+  padding-left: 35px;
+  padding-right: 50px;
+  position: relative;
+}
+
+.admin {
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #507061;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.admin:hover {
+  color: #ff0000;
+}
