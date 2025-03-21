@@ -32,10 +32,10 @@
 .home-our-services-text::before {
   content: ''; 
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: -6rem;
+  right: -6rem;
+  width: 150%;
+  height: 150%;
   background-image: url('../assets/green-pattern2.png'); 
   background-position: center; 
   z-index: -1; 
@@ -161,10 +161,10 @@
 .home-about-us-text::before {
   content: ''; 
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: -6rem;
+  right: -6rem;
+  width: 150%;
+  height: 150%;
   background-image: url('../assets/green-pattern2.png'); 
   background-position: center; 
   z-index: -1; 
@@ -296,15 +296,15 @@
 }
 
 .home-rooms-treatments-text::before {
-  content: '';
+  content: ''; 
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('../assets/green-pattern2.png');
-  background-position: center;
-  z-index: -1;
+  top: -10rem;
+  right: -6rem;
+  width: 150%;
+  height: 150%;
+  background-image: url('../assets/green-pattern2.png'); 
+  background-position: center; 
+  z-index: -1; 
 }
 
 .home-rooms-treatments h2 {
@@ -410,7 +410,7 @@
 }
 
 .home-events h2 {
-  font-size: 17px;
+  font-size: 30px;
   color: #3A5465;
 }
 

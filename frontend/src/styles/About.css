@@ -5,8 +5,13 @@
 }
 
 .about-header {
-    text-align: center;
-    padding: 100px 0;
+  font-size: 3rem;
+  color: #3A5465;
+  text-transform: uppercase;
+  font-family: 'Playfair Display', serif;
+  font-weight: 300;
+  margin-top: 13rem;
+  text-align: center;
 }
 
 .about-header h1 {

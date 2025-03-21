@@ -29,8 +29,8 @@ const Home = () => {
           <div className="home-our-services-text">
             <h2>Our Services</h2>
             <h3>Take A Deep Breath And Just Enjoy Life</h3>
-            <p>Nunc quis eleifend lectus. Donec id semper ligula, ut laoreet orci. Donec tempor vestibulum quam non gravida.</p>
-            <Link to="/services">View More</Link>
+            <p>Discover a world of relaxation and rejuvenation. Explore our range of spa treatments designed to soothe your body and mind. Let us take care of you – because you deserve it.</p>
+            <Link to="/services">View Services</Link>
           </div>
 
           <div className="home-service-image">
@@ -59,10 +59,11 @@ const Home = () => {
             <h2>About Us</h2>
             <h3>A Healthy Body Is A Guest-Chamber For The Soul</h3>
             <p>
-              Nunc quis eleifend lectus. Donec id semper ligula, ut laoreet orci. Donec tempor vestibulum quam non gravida. Sed eleifend,
-              erat at pulvinar hendrerit, diam dui dignissim diam, non congue nibh sem eget sapien.
+            Our philosophy is built on the belief that true well-being starts with self-care. At Oceanic Aquarius, 
+            we are dedicated to creating a serene space where you can relax, 
+            recharge, and reconnect with yourself. Learn more about our journey and commitment to holistic wellness.
             </p>
-            <Link to="/about">View More</Link>
+            <Link to="/about">View About us</Link>
           </div>
         </div>
         <div className="home-about-images">
@@ -80,10 +81,11 @@ const Home = () => {
             <h3>A Room for Every Moment of Calm</h3>
             <p>“Discover spaces that inspire relaxation, connection, and self-care.”</p>
             <p>
-              Nunc quis eleifend lectus. Donec id semper ligula, ut laoreet orci. Donec tempor vestibulum quam non gravida. Sed eleifend,
-              erat at pulvinar hendrerit, diam dui dignissim diam, non congue nibh sem eget sapien.
+            Step into a world of tranquility where every space is designed for your ultimate relaxation. 
+            From soothing spa treatments to serene rooms, we offer the perfect retreat for mind and body. 
+            Explore our offerings and book your experience today.
             </p>
-            <Link to="/booking">View More</Link>
+            <Link to="/booking">View Our Room & Treatments</Link>
           </div>
 
           {/* Image part */}
@@ -165,7 +167,7 @@ const Home = () => {
         </div>
 
         {/* Link to explore events */}
-        <Link to="/event/packages" className="home-event-packages-link">View more</Link>
+        <Link to="/event/packages" className="home-event-packages-link">View Events</Link>
       </section>
     </div>
   );

@@ -116,7 +116,7 @@ const EventPackages = () => {
             <p>
                 <ul>
                   <li>Personalized treatments and services</li>
-                  <li>Group sizes from 4 to 20+ guests</li>
+                  <li>Group sizes from 4 to 10+ guests</li>
                   <li>Flexible scheduels to fit your needs</li>
                 </ul>
                 Prices vary based on customization
