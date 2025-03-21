@@ -27,8 +27,7 @@ const AdminDashboard: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [selectedDate, setSelectedDate] = useState<Date>(getTodayDate());
-  const [openBookingId, setOpenBookingId] = useState<string | null>(null);
-  const [statusType, setStatusType] = useState<'confirm' | 'cancel' | null>(null);
+  const [selectedStaff, setSelectedStaff] = useState<string>(''); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,7 +36,7 @@ const AdminDashboard: React.FC = () => {
       navigate('/admin');
     } else {
       setIsAuthenticated(true);
-      fetchBookings(selectedDate.toISOString().split('T')[0]);
+      fetchBookings(selectedDate.toISOString().split('T')[0]); 
     }
   }, [navigate, selectedDate]);
 
@@ -72,7 +71,7 @@ const AdminDashboard: React.FC = () => {
           duration: booking.duration || 60,
         }));
 
-        processedBookings.sort((a: { time: string; }, b: { time: string; }) => {
+        processedBookings.sort((a: { time: string }, b: { time: string }) => {
           const timeA = a.time.split(':').map(Number);
           const timeB = b.time.split(':').map(Number);
           return timeA[0] * 60 + timeA[1] - (timeB[0] * 60 + timeB[1]);
@@ -96,48 +95,12 @@ const AdminDashboard: React.FC = () => {
     setSelectedDate(currentDate);
   };
 
-  const updateBookingStatus = async (bookingId: string, newStatus: string) => {
-    const token = localStorage.getItem('jwtToken');
-    if (!token) return;
-
-    try {
-      const response = await fetch(
-        `https://uymonst7eb.execute-api.eu-north-1.amazonaws.com/admin/bookings/status/${bookingId}`,
-        {
-          method: 'PUT',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ bookingId, status: newStatus }),
-        }
-      );
-
-      if (response.ok) {
-        setBookings((prevBookings) =>
-          prevBookings.map((booking) =>
-            booking.bookingId === bookingId ? { ...booking, status: newStatus } : booking
-          )
-        );
-        setOpenBookingId(null);
-        setStatusType(null);
-      } else {
-        console.error('Failed to update booking status.');
-      }
-    } catch (error) {
-      console.error('Error updating booking status:', error);
-    }
-  };
-
-  const toggleStatusOptions = (bookingId: string, type: 'confirm' | 'cancel') => {
-    if (openBookingId === bookingId && statusType === type) {
-      setOpenBookingId(null);
-      setStatusType(null);
-    } else {
-      setOpenBookingId(bookingId);
-      setStatusType(type);
-    }
-  };
+  // Filter bokningar baserat på personal och valt datum
+  const filteredBookings = bookings.filter(
+    (booking) =>
+      booking.date === selectedDate.toISOString().split('T')[0] &&
+      (selectedStaff === '' || booking.staffName === selectedStaff)
+  );
 
   const handleLogout = () => {
     localStorage.removeItem('jwtToken');
@@ -176,11 +139,23 @@ const AdminDashboard: React.FC = () => {
               <button onClick={() => handleDateChange('next')}>Next Day</button>
             </div>
 
+            <div className="admin-dashboard-staff-filter">
+              <label htmlFor="staffFilter">Filter by Staff: </label>
+              <select id="staffFilter" value={selectedStaff} onChange={(e) => setSelectedStaff(e.target.value)}>
+                <option value="">All Staff</option>
+                {Array.from(new Set(bookings.map((b) => b.staffName))).map((staff) => (
+                  <option key={staff} value={staff}>
+                    {staff}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             {isLoading && <p>Loading bookings...</p>}
             {errorMessage && <p className="error-message">{errorMessage}</p>}
 
             <div className="admin-dashboard-schedule">
-              <h3>All Bookings</h3>
+              <h3>Bookings for {selectedDate.toISOString().split('T')[0]}</h3>
               <table>
                 <thead>
                   <tr>
@@ -193,49 +168,26 @@ const AdminDashboard: React.FC = () => {
                     <th>Status</th>
                     <th>Payment Method</th>
                     <th>Staff Member</th>
-                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {bookings.filter((b) => b.date === selectedDate.toISOString().split('T')[0]).length > 0 ? (
-                    bookings
-                      .filter((b) => b.date === selectedDate.toISOString().split('T')[0])
-                      .map((booking) => (
-                        <tr key={booking.bookingId}>
-                          <td>{booking.time}</td>
-                          <td>{booking.customerName}</td>
-                          <td>{booking.treatmentName}</td>
-                          <td>{booking.room}</td>
-                          <td>£{booking.price.toFixed(2)}</td>
-                          <td>{booking.duration} min</td>
-                          <td>{booking.status}</td>
-                          <td>{booking.paymentMethod}</td>
-                          <td>{booking.staffName}</td>
-                          <td>
-                            <button onClick={() => toggleStatusOptions(booking.bookingId, 'confirm')}>✔️</button>
-                            <button onClick={() => toggleStatusOptions(booking.bookingId, 'cancel')}>❌</button>
-                            {openBookingId === booking.bookingId && (
-                              <div>
-                                {statusType === 'confirm' && (
-                                  <div>
-                                    <button onClick={() => updateBookingStatus(booking.bookingId, 'Confirmed')}>Confirmed</button>
-                                    <button onClick={() => updateBookingStatus(booking.bookingId, 'Completed')}>Completed</button>
-                                  </div>
-                                )}
-                                {statusType === 'cancel' && (
-                                  <div>
-                                    <button onClick={() => updateBookingStatus(booking.bookingId, 'Cancelled')}>Cancelled</button>
-                                    <button onClick={() => updateBookingStatus(booking.bookingId, 'No Show')}>No Show</button>
-                                  </div>
-                                )}
-                              </div>
-                            )}
-                          </td>
-                        </tr>
-                      ))
+                  {filteredBookings.length > 0 ? (
+                    filteredBookings.map((booking) => (
+                      <tr key={booking.bookingId}>
+                        <td>{booking.time}</td>
+                        <td>{booking.customerName}</td>
+                        <td>{booking.treatmentName}</td>
+                        <td>{booking.room}</td>
+                        <td>£{booking.price.toFixed(2)}</td>
+                        <td>{booking.duration} min</td>
+                        <td>{booking.status}</td>
+                        <td>{booking.paymentMethod}</td>
+                        <td>{booking.staffName}</td>
+                      </tr>
+                    ))
                   ) : (
                     <tr>
-                      <td colSpan={10}>No bookings available for {selectedDate.toISOString().split('T')[0]}.</td>
+                      <td colSpan={9}>No bookings available.</td>
                     </tr>
                   )}
                 </tbody>
