@@ -87,7 +87,7 @@ const Booking = () => {
         ...formData,
         treatmentId: selectedTreatment.treatmentId,
         treatmentName: selectedTreatment.treatmentName,
-        description: selectedTreatment.description, // This could be removed if you don't want to show the description
+        description: selectedTreatment.description,
         room: selectedTreatment.room,
         category: selectedTreatment.category,
         employee: selectedTreatment.employee,
@@ -100,7 +100,7 @@ const Booking = () => {
       ...formData,
       treatmentId: '',
       treatmentName: '',
-      description: '',  // Optional: Reset the description here as well
+      description: '',  
       room: '',
       category: '',
       employee: '',
@@ -112,14 +112,14 @@ const Booking = () => {
     switch (category) {
       case 'Pool':
       case 'Sauna':
-        return 10;  // Max 10 people for Pool and Sauna
+        return 10; 
       case 'Massage':
-        return 2;   // Max 2 people for Massage
+        return 2;   
       case 'Body Treatment':
       case 'Facial Care':
-        return 1;   // Max 1 person for Body Treatment and Facial Care
+        return 1;   
       default:
-        return 10;  // Default to 10 for any unknown category
+        return 10;  
     }
   };
 
@@ -186,7 +186,6 @@ const Booking = () => {
     }
   };
 
-  // Group treatments by category
   const groupedTreatments = treatments.reduce((groups, treatment) => {
     const { category } = treatment;
     if (!groups[category]) {
@@ -197,18 +196,14 @@ const Booking = () => {
   }, {} as { [key: string]: Treatment[] });
 
   const handleNumberOfPeopleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Get the max number of people for this category
     const maxPeople = getMaxPeopleForCategory(formData.category);
-    // Make sure that the number of people does not exceed the max limit
     const value = Math.min(Number(e.target.value), maxPeople);
-    // Remove the console log line
     setFormData({
       ...formData,
       numberOfPeople: value,
     });
   };
 
-  // Debugging: Check if formData.category is being updated correctly
   useEffect(() => {
     console.log('Selected category:', formData.category);
   }, [formData.category]);
@@ -236,7 +231,7 @@ const Booking = () => {
                 {groupedTreatments[category].map((treatment) => (
                   <div key={treatment.treatmentId} className="booking-card">
                     <h4 className="booking-treatment-name">{treatment.treatmentName}</h4>
-                    {/* Remove description here */}
+                    <p>{treatment.description}</p> 
                     <p><strong>Price:</strong> {treatment.duration} min – {treatment.price} £</p>
                     <button
                       onClick={() => handleTreatmentSelection(treatment.treatmentId)}
@@ -248,8 +243,6 @@ const Booking = () => {
                     {formData.treatmentId === treatment.treatmentId && (
                       <div className="selected-treatment">
                         <p><strong>Selected Treatment:</strong> {formData.treatmentName}</p>
-                        {/* Commenting out description here to hide it */}
-                        {/* <p><strong>Description:</strong> {formData.description}</p> */}
                         <button onClick={handleRemoveTreatment} className="remove-treatment-button">
                           Remove Treatment
                         </button>
@@ -311,7 +304,6 @@ const Booking = () => {
                             style={{ resize: 'none' }} 
                           />
                           
-                          {/* Display error message just above the 'Book Now' button */}
                           {errorMessage && (
                             <div className="error-message">
                               <p>{errorMessage}</p>
@@ -330,7 +322,6 @@ const Booking = () => {
           )}
         </div>
       </section>
-      {/* Events Section */}
       <section className="booking-section-events">
         <h2>Events</h2>
         <div className="booking-card-events">
