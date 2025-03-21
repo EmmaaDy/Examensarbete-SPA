@@ -124,6 +124,7 @@ body {
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   margin-bottom: 20px;
+  min-height: 750px;
 }
 
 .services-room-card:hover {
@@ -151,13 +152,15 @@ body {
 }
 
 .services-room-card .services-book-link {
-  background-color: #507061;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 30px; 
+  background-color: #507061; 
+  color: white; 
+  text-decoration: none; 
+  border-radius: 50px; 
+  transition: background-color 0.3s ease; 
+  text-transform: uppercase;
 }
 
 .services-room-card .services-book-link:hover {
@@ -237,14 +240,15 @@ body {
 }
 
 .services-explore-link {
-  background-color: #507061;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+  display: inline-block;
   margin-top: 20px;
+  padding: 12px 30px; 
+  background-color: #507061; 
+  color: white; 
+  text-decoration: none; 
+  border-radius: 50px; 
+  transition: background-color 0.3s ease; 
+  text-transform: uppercase; 
 }
 
 .services-explore-link:hover {
