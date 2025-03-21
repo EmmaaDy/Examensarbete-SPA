@@ -28,6 +28,8 @@ const AdminDashboard: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [selectedDate, setSelectedDate] = useState<Date>(getTodayDate());
   const [selectedStaff, setSelectedStaff] = useState<string>(''); 
+  const [openBookingId, setOpenBookingId] = useState<string | null>(null);
+  const [statusType, setStatusType] = useState<'confirm' | 'cancel' | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,7 +38,7 @@ const AdminDashboard: React.FC = () => {
       navigate('/admin');
     } else {
       setIsAuthenticated(true);
-      fetchBookings(selectedDate.toISOString().split('T')[0]); 
+      fetchBookings(selectedDate.toISOString().split('T')[0]);
     }
   }, [navigate, selectedDate]);
 
@@ -95,7 +97,49 @@ const AdminDashboard: React.FC = () => {
     setSelectedDate(currentDate);
   };
 
-  // Filter bokningar baserat på personal och valt datum
+  const updateBookingStatus = async (bookingId: string, newStatus: string) => {
+    const token = localStorage.getItem('jwtToken');
+    if (!token) return;
+
+    try {
+      const response = await fetch(
+        `https://uymonst7eb.execute-api.eu-north-1.amazonaws.com/admin/bookings/status/${bookingId}`,
+        {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ bookingId, status: newStatus }),
+        }
+      );
+
+      if (response.ok) {
+        setBookings((prevBookings) =>
+          prevBookings.map((booking) =>
+            booking.bookingId === bookingId ? { ...booking, status: newStatus } : booking
+          )
+        );
+        setOpenBookingId(null);
+        setStatusType(null);
+      } else {
+        console.error('Failed to update booking status.');
+      }
+    } catch (error) {
+      console.error('Error updating booking status:', error);
+    }
+  };
+
+  const toggleStatusOptions = (bookingId: string, type: 'confirm' | 'cancel') => {
+    if (openBookingId === bookingId && statusType === type) {
+      setOpenBookingId(null);
+      setStatusType(null);
+    } else {
+      setOpenBookingId(bookingId);
+      setStatusType(type);
+    }
+  };
+
   const filteredBookings = bookings.filter(
     (booking) =>
       booking.date === selectedDate.toISOString().split('T')[0] &&
@@ -168,6 +212,7 @@ const AdminDashboard: React.FC = () => {
                     <th>Status</th>
                     <th>Payment Method</th>
                     <th>Staff Member</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -183,11 +228,31 @@ const AdminDashboard: React.FC = () => {
                         <td>{booking.status}</td>
                         <td>{booking.paymentMethod}</td>
                         <td>{booking.staffName}</td>
+                        <td>
+                          <button onClick={() => toggleStatusOptions(booking.bookingId, 'confirm')}>✔️</button>
+                          <button onClick={() => toggleStatusOptions(booking.bookingId, 'cancel')}>❌</button>
+                          {openBookingId === booking.bookingId && (
+                            <div>
+                              {statusType === 'confirm' && (
+                                <div>
+                                  <button onClick={() => updateBookingStatus(booking.bookingId, 'Confirmed')}>Confirmed</button>
+                                  <button onClick={() => updateBookingStatus(booking.bookingId, 'Completed')}>Completed</button>
+                                </div>
+                              )}
+                              {statusType === 'cancel' && (
+                                <div>
+                                  <button onClick={() => updateBookingStatus(booking.bookingId, 'Cancelled')}>Cancelled</button>
+                                  <button onClick={() => updateBookingStatus(booking.bookingId, 'No Show')}>No Show</button>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </td>
                       </tr>
                     ))
                   ) : (
                     <tr>
-                      <td colSpan={9}>No bookings available.</td>
+                      <td colSpan={10}>No bookings available.</td>
                     </tr>
                   )}
                 </tbody>
