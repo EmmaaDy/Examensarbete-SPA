@@ -67,7 +67,7 @@ const EventPackages = () => {
             <h3>Luxury Wellness Day</h3>
             <h4 className='description'>Pamper yourself and your loved ones with a day of pure luxury.
               Our luxury package includes premium treatments that will leave you feeling refreshed and completely relaxed.</h4>
-            <p>Duration: Full-Day Experience
+            <p>Duration: Full-Day Package
                 <ul>Inclusions:
                   <li>A combination of signature massages (E.G., Himalayan Salt massage, Deep Tissue)</li>
                   <li>Anti-ageing and hydrating facials</li>
@@ -83,19 +83,21 @@ const EventPackages = () => {
             <img src={pattern3} alt="bg-pattern" className='events-packages-bg' />
           </div>
 
-          <div className='custom-spa-day'>
-            <h3>Custom Spa Day Package</h3>
-            <h4 className='description'>Perfect for small to large groups, this package offers a selection of our most popular treatments.
-              Choose from relaxing massages, invigorating facials, detoxifying saunas, and more.
+          <div className='ultimate'>
+            <h3>Ultimate Relaxation Retreat</h3>
+            <h4 className='description'>Unwind and indulge in a day of pure relaxation with our ultimate relaxation retreat package.
+              Designed to rejuvenate your body and mind, this package combines our most luxurious treatments in a tranquil setting.
             </h4>
-            <p>Duration: Full-day or Half-day Package
+            <p>Duration: Full-day Package
                 <ul>Inclusions:
-                  <li>Choose from 3-5 different treatments (Massage, Facial, Sauna, Etc.)</li>
-                  <li>Access to relaxation lounges and bubble pool</li>
-                  <li>Private indoor/outdoor sauna experiences</li>
-                  <li>Light snacks and beverages</li>
+                  <li>Relaxing Spa Massage or Himalayan Salt Massage</li>
+                  <li>Aromatherapy wrap for full-body relaxation</li>
+                  <li>Hydrating facial for a refreshed glow</li>
+                  <li>Private access to the indoor or outdoor sauna</li>
+                  <li>Extended time in the Bubble Pool & Lounge</li>
+                  <li>Herbal teas and a selection of healthy snacks</li>
                 </ul>
-                Perfect for: Bridal showers, Birthdays, or Corporate relaxation days.
+                Perfect for: Self-care days, stress relief and deep relaxation.
 
               <div>Price: Starting at [price] SEK per person</div>
             </p>

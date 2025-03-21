@@ -2,10 +2,9 @@
     display: flex;
     flex-direction: column;
     font-family: Arial, sans-serif;
-    color: #333;
     max-width: 1440px;
     height: auto;
-    padding-bottom: 150px;
+    padding-bottom: 500px;
     margin: auto;
 }
 
@@ -27,7 +26,6 @@
     color: #3A5465;
     font-size: 2rem;
     font-weight: lighter;
-    padding: 0 50px;
 }
 
 .events-packages-headerleaf {
@@ -39,46 +37,32 @@
     z-index: -1;
 }
 
-.events-packages-row1, .events-packages-row2 {
+.events-packages-row1, .events-packages-row2, .events-packages-row4 {
     margin-top: 150px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin-left: 100px;
 }
 
-.events-packages-row2, .events-packages-row4 {
-    margin-top: 50px !important;
-}
-
 .events-packages-row3 {
     display: grid;
-    width: 50%;
-    grid-template-columns: 1fr; 
+    width: 100%;
+    grid-template-columns: 1fr 1fr; 
     justify-content: center;
     align-items: center;
-    margin-top: 50px;
-    margin-left: 400px;
-}
-
-.events-packages-row4 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
-    margin-left: 0;
+    margin-top: 150px;
 }
 
 .events-packages-bg {
     position: absolute;  
     top: 0;
-    left: 0;
-    width: 110%;
+    left: -70px;
+    width: 150%;
     height: 110%;
     z-index: -1;  
   }
 
-.custom, .corporate, .luxury, .custom-spa-day, .customizable, .booking-your-event, .events-pictures {
+.custom, .corporate, .luxury, .ultimate, .customizable, .booking-your-event, .events-pictures {
     position: relative;
     width: 50%;
     margin-left: 100px;
@@ -91,32 +75,32 @@
 }
 
 .customizable {
-    margin: 150px auto; 
+    margin-left: 70%; 
 }
 
 .events-packages-bath {
     position: relative;
-    top: -700px;
-    left:-300px;
+    width: 50%;
+    top: -10px;
+    left:-700px;
 }
 
-.custom h3, .corporate h3, .luxury h3, .custom-spa-day h3, .customizable h3, .booking-your-event h3 {
+.custom h3, .corporate h3, .luxury h3, .ultimate h3, .customizable h3, .booking-your-event h3 {
     margin-top: 50px;
-    font-size: x-large;
+    font-size: x-large;    
+}
+
+.custom h4, .corporate h4, .luxury h4, .ultimate h4, .customizable h4, .booking-your-event h4 {
+    font-size: larger;
     font-weight: normal;
 }
 
-.custom h4, .corporate h4, .luxury h4, .custom-spa-day h4, .customizable h4, .booking-your-event h4 {
-    font-size: larger;
+.custom p, .corporate p, .luxury p, .ultimate p, .customizable p, .booking-your-event p {
+    font-size: large;
     font-weight: lighter;
 }
 
-.custom p, .corporate p, .luxury p, .custom-spa-day p, .customizable p, .booking-your-event p {
-    font-size: larger;
-    font-weight: lighter;
-}
-
-.custom a, .corporate a, .luxury a, .custom-spa-day a, .customizable a, .booking-your-event a {
+.custom a, .corporate a, .luxury a, .ultimate a, .customizable a, .booking-your-event a {
     display: inline-block; 
     background-color: #507061; 
     color: white; 
@@ -133,7 +117,7 @@
     width: 100%
   }
   
-  .custom a:hover, .corporate a:hover, .luxury a:hover, .custom-spa-day a:hover, .customizable a:hover, .booking-your-event a:hover {
+  .custom a:hover, .corporate a:hover, .luxury a:hover, .ultimate a:hover, .customizable a:hover, .booking-your-event a:hover {
     background-color: #3e5a48;
   }
 
@@ -147,18 +131,13 @@
 
   .event-packages-leaf2 {
     position: absolute;
-    top: 155%;
+    top: 185%;
     right: -40px;
     width: 350px;
     transform: scaleX(-1);
 }
 
-.booking-your-event a {
-    margin-bottom: 40px;
-}
-
 .event-picture1, .event-picture2 {
-    width: 250px;
     position: relative;
 }
 
@@ -168,11 +147,5 @@
 }
 
 .event-picture2 {
-    left: -150px;
-}
-
-.booking-your-event, .events-pictures {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
+    left: -100px;
 }
