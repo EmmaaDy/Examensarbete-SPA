@@ -43,11 +43,11 @@ const Booking = () => {
     category: '',
     employee: '',
     comment: '',
-    numberOfPeople: 1, // Default to 1 person
+    numberOfPeople: 1, 
   });
 
   const [treatments, setTreatments] = useState<Treatment[]>([]);
-  const [errorMessage, setErrorMessage] = useState<string>(''); // State to store the error message
+  const [errorMessage, setErrorMessage] = useState<string>(''); 
 
   useEffect(() => {
     const fetchTreatments = async () => {
