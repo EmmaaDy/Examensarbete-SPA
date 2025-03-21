@@ -10,9 +10,9 @@ const employeesTreatments = {
     { "treatmentId": "5", "name": "Anti-Aging Facial", "price": 90, "duration": 60, "category": "Face Care Treatment", "room": "Face Care Treatment" }
   ],
   Emma: [
-    { "treatmentId": "1", "name": "Relaxing Spa Massage", "price": 75, "duration": 60, "category": "Massage Treatments", "room": "Massage room" },
-    { "treatmentId": "2", "name": "Himalayan Salt Massage", "price": 85, "duration": 60, "category": "Massage Treatments", "room": "Massage room" },
-    { "treatmentId": "3", "name": "Deep Tissue Massage", "price": 80, "duration": 60, "category": "Massage Treatments", "room": "Massage room" }
+    { "treatmentId": "1", "name": "Relaxing Spa Massage", "price": 75, "duration": 60, "category": "Massage Treatments", "room": "Massage Room" },
+    { "treatmentId": "2", "name": "Himalayan Salt Massage", "price": 85, "duration": 60, "category": "Massage Treatments", "room": "Massage Room" },
+    { "treatmentId": "3", "name": "Deep Tissue Massage", "price": 80, "duration": 60, "category": "Massage Treatments", "room": "Massage Room" }
   ],
   Isabella: [
     { "treatmentId": "6", "name": "Body Scrub & Hydration", "price": 85, "duration": 60, "category": "Body Care Treatments", "room": "Body Care Treatments" },
@@ -23,6 +23,15 @@ const employeesTreatments = {
     { "treatmentId": "9", "name": "Outdoor Sauna Experience", "price": 60, "duration": 60, "category": "Sauna Experiences", "room": "Outdoor Sauna" },
     { "treatmentId": "10", "name": "Relax & Bubble Pool", "price": 70, "duration": 90, "category": "Sauna Experiences", "room": "Bubble Pool & Relax Area" }
   ]
+};
+
+type TreatmentCategory = 'Face Care Treatment' | 'Massage Treatments' | 'Body Care Treatments' | 'Sauna Experiences';
+
+const maxPeoplePerCategory: Record<TreatmentCategory, number> = {
+  "Face Care Treatment": 1,
+  "Massage Treatments": 2,
+  "Body Care Treatments": 1,
+  "Sauna Experiences": 10
 };
 
 export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
@@ -42,18 +51,32 @@ export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGat
       time = '',
       payAtSalon = false,
       paymentMethod = 'Pay at Salon',
-      room = '',  
+      room = '',
+      comment = '', 
+      numberOfPeople = 1, 
     } = body;
+
+    // Type cast category to TreatmentCategory
+    const categoryTyped = category as TreatmentCategory;
+
+    // Check the max allowed number of people for the given category
+    const maxPeople = maxPeoplePerCategory[categoryTyped];
+    if (numberOfPeople > maxPeople) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: `The maximum number of people for this category (${category}) is ${maxPeople}.` }),
+      };
+    }
 
     let employee: string | null = null;
     let treatmentRoom: string | null = null;
 
-    // Hitta rätt anställd och behandling
+    // Find the correct employee and treatment
     for (const [emp, treatments] of Object.entries(employeesTreatments)) {
       const treatment = treatments.find(t => t.treatmentId === treatmentId);
       if (treatment && treatment.category === category) {
         employee = emp;
-        treatmentRoom = treatment.room; 
+        treatmentRoom = treatment.room;
         break;
       }
     }
@@ -65,7 +88,7 @@ export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGat
       };
     }
 
-    // Validera rum
+    // Validate room
     if (room !== treatmentRoom) {
       return {
         statusCode: 400,
@@ -73,7 +96,7 @@ export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGat
       };
     }
 
-    // Validering av tid och datum
+    // Validate date and time
     const localStartTime = new Date(`${date}T${time}`);
     if (isNaN(localStartTime.getTime())) {
       return {
@@ -101,14 +124,14 @@ export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGat
       };
     }
 
-    // Beräkna sluttid för behandlingen
+    // Calculate the end time of the treatment
     const treatmentEndTime = new Date(localStartTime.getTime() + duration * 60000);
-    const cleaningTime = new Date(treatmentEndTime.getTime() + 15 * 60000); 
+    const cleaningTime = new Date(treatmentEndTime.getTime() + 15 * 60000);
 
-    // Definiera stängningstiden för salongen (17:45)
+    // Define the salon's closing time (17:45)
     const closingTime = new Date(`${date}T17:45:00`);
-    
-    // Kontrollera att slutet av behandlingen inte överskrider stängningstiden
+
+    // Check that the treatment does not end after closing time
     if (treatmentEndTime > closingTime) {
       return {
         statusCode: 400,
@@ -116,7 +139,7 @@ export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGat
       };
     }
 
-    // Kontrollera om någon annan bokning överlappar
+    // Check for overlapping bookings
     const scanParams = {
       TableName: 'Bookings',
       FilterExpression: '#date = :date AND #room = :room AND ((' +
@@ -126,17 +149,17 @@ export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGat
         '#date': 'date',
         '#room': 'room',
         '#startTime': 'time',
-        '#endTime': 'endTime', 
+        '#endTime': 'endTime',
       },
       ExpressionAttributeValues: {
         ':date': { S: date },
-        ':room': { S: room }, 
-        ':startTime': { S: localStartTime.toISOString() },  
-        ':endTime': { S: treatmentEndTime.toISOString() },   
+        ':room': { S: room },
+        ':startTime': { S: localStartTime.toISOString() },
+        ':endTime': { S: treatmentEndTime.toISOString() },
       },
     };
 
-    // Utför scan för att hitta överlappningar
+    // Perform scan to check for overlaps
     const result = await db.send(new ScanCommand(scanParams));
 
     if (result.Items && result.Items.length > 0) {
@@ -146,11 +169,15 @@ export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGat
       };
     }
 
-    // Skapa bokningen
+    // Adjust price based on the number of people
+    const additionalPricePerPerson = 10; 
+    const totalPrice = price + (numberOfPeople - 1) * additionalPricePerPerson;
+
+    // Create the booking
     const bookingId = uuidv4();
     const bookingStatus = 'Pending';
 
-    // Formatera tiden
+    // Format time
     const localTimeFormatted = `${localStartTime.getHours().toString().padStart(2, '0')}:${localStartTime.getMinutes().toString().padStart(2, '0')}`;
 
     const bookingParams = {
@@ -161,7 +188,7 @@ export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGat
         treatmentName: { S: treatmentName },
         description: { S: description },
         category: { S: category },
-        price: { N: price.toString() },
+        price: { N: totalPrice.toString() },
         duration: { N: duration.toString() },
         name: { S: name },
         email: { S: email },
@@ -175,6 +202,8 @@ export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGat
         cleaningTime: { S: cleaningTime.toISOString() },
         employee: { S: employee },
         room: { S: room },
+        comment: { S: comment },
+        numberOfPeople: { N: numberOfPeople.toString() },
       },
     };
 
@@ -186,7 +215,7 @@ export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGat
         message: 'Booking created successfully.',
         bookingId,
         treatmentName,
-        price,
+        price: totalPrice,
         date,
         time: localTimeFormatted,
         customerName: name,
@@ -195,6 +224,8 @@ export const createBooking = async (event: APIGatewayProxyEvent): Promise<APIGat
         paymentMethod,
         employee,
         room,
+        comment,
+        numberOfPeople,
       }),
     };
   } catch (error) {

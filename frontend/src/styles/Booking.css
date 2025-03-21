@@ -16,17 +16,17 @@
 .booking-message {
   position: relative;
   margin-bottom: 20px;
-  right: -40px; 
+  right: -40px;
   font-size: 1rem;
   color: #607D8B;
   padding: 10px 15px;
-  border-radius: 0 8px 8px 0; 
-  transform: rotate(-10deg); 
-  transform-origin: left; 
-  max-width: 18rem; 
+  border-radius: 0 8px 8px 0;
+  transform: rotate(-10deg);
+  transform-origin: left;
+  max-width: 18rem;
   background-color: #f9f9f9;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-left: 4px solid #3A5465; 
+  border-left: 4px solid #3A5465;
 }
 
 .booking-contact-link {
@@ -38,37 +38,22 @@
   text-decoration: none;
   border-radius: 50px;
   transition: background-color 0.3s ease;
-  text-transform: uppercase; 
+  text-transform: uppercase;
 }
 
 .booking-contact-link:hover {
   background-color: #3e5a48;
 }
 
-.booking-header {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.booking-header h1 {
-  font-size: 2.5rem;
-  color: #3A5465;
-}
-
-.booking-header p {
-  font-size: 1.2rem;
-  color: #607D8B;
-}
-
 .booking-section {
   position: relative;
   padding: 20px;
   background-image: url('../assets/green-pattern2.png');
-  background-size: contain;  
-  background-repeat: repeat-y; 
-  background-position: top center; 
+  background-size: contain;
+  background-repeat: repeat-y;
+  background-position: top center;
   border-radius: 8px;
-  max-width: 800px; 
+  max-width: 800px;
   margin: auto;
 }
 
@@ -104,12 +89,12 @@
 .booking-button {
   display: inline-block;
   padding: 15px 40px;
-  background-color: #4f6b5b; 
+  background-color: #4f6b5b;
   color: white;
   text-decoration: none;
   font-size: 16px;
   font-weight: bold;
-  border-radius: 50px ; 
+  border-radius: 50px;
   text-align: center;
   border: 2px solid #4f6b5b;
 }
@@ -118,25 +103,100 @@
   background-color: #3e5a48;
 }
 
-.booking-section-events {
+.selected-treatment {
+  margin-top: 20px;
+  background-color: #e9f5f1;
+  padding: 15px;
   border-radius: 8px;
-  padding: 20px;
-  max-width: 500px;
   text-align: center;
-  margin: 40px auto;
+  border: 1px solid #4f6b5b;
+  margin-bottom: 30px;
 }
 
-.booking-card-events {
-  margin: 0 auto;
-  padding: 10px;
+.selected-treatment p {
+  font-size: 1.2rem;
+  color: #3A5465;
+}
+
+.remove-treatment-button {
+  padding: 10px 30px;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 50px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.remove-treatment-button:hover {
+  background-color: #c0392b;
+}
+
+.booking-form-section {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f3f3f3;
+  border-radius: 8px;
+  max-width: 800px;
+  margin: 20px auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.booking-form input {
+  width: 100%;
+  max-width: 500px;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.booking-form button {
+  display: inline-block;
+  padding: 15px 40px;
+  background-color: #4f6b5b;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 50px;
   text-align: center;
+  border: 2px solid #4f6b5b;
+  width: 100%;
+  max-width: 500px;
+}
+
+.booking-form button:hover {
+  background-color: #3e5a48;
+}
+
+.booking-category-name {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #3A5465;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;     
+  text-align: center;      
+}
+
+.booking-treatment-name {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+  color: #3A5465;
+}
+
+.booking-section-events {
+  text-align: center; 
+  padding: 40px 0; 
 }
 
 .booking-section-events h2 {
   font-size: 2.5rem; 
   color: #2a3d4f; 
   text-transform: uppercase; 
-  text-align: center; 
   margin: 0; 
 }
 
@@ -144,6 +204,14 @@
   color: #607D8B; 
   text-transform: capitalize; 
   margin: 5px; 
+}
+
+.booking-card-events {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .booking-link-events {
@@ -162,33 +230,3 @@
   background-color: #3e5a48;
 }
 
-.available-slots-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 600px;
-  width: 90%;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-}
-
-.close-modal-button {
-  background: #f44336;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
-}

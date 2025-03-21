@@ -1,112 +1,334 @@
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import '../styles/Booking.css';
+import { Link } from 'react-router-dom';
+
+type Treatment = {
+  treatmentId: string;
+  treatmentName: string;
+  description: string;
+  room: string;
+  category: string;
+  employee: string;
+  price: number;
+  duration: number;
+};
+
+type FormData = {
+  name: string;
+  phone: string;
+  email: string;
+  date: string;
+  time: string;
+  treatmentId: string;
+  treatmentName: string;
+  description: string;
+  room: string;
+  category: string;
+  employee: string;
+  comment: string;
+  numberOfPeople: number;
+};
 
 const Booking = () => {
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    phone: '',
+    email: '',
+    date: '',
+    time: '',
+    treatmentId: '',
+    treatmentName: '',
+    description: '',
+    room: '',
+    category: '',
+    employee: '',
+    comment: '',
+    numberOfPeople: 1, 
+  });
+
+  const [treatments, setTreatments] = useState<Treatment[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string>(''); 
+
+  useEffect(() => {
+    const fetchTreatments = async () => {
+      try {
+        const response = await fetch(
+          'https://uymonst7eb.execute-api.eu-north-1.amazonaws.com/treatments'
+        );
+        if (!response.ok) {
+          throw new Error('Failed to fetch treatments');
+        }
+        const data = await response.json();
+        setTreatments(data);
+        console.log('Fetched treatments:', data);
+      } catch (error) {
+        console.error('Error fetching treatments:', error);
+      }
+    };
+
+    fetchTreatments();
+  }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleTreatmentSelection = (treatmentId: string) => {
+    const selectedTreatment = treatments.find(
+      (treatment) => treatment.treatmentId === treatmentId
+    );
+
+    if (selectedTreatment) {
+      setFormData({
+        ...formData,
+        treatmentId: selectedTreatment.treatmentId,
+        treatmentName: selectedTreatment.treatmentName,
+        description: selectedTreatment.description,
+        room: selectedTreatment.room,
+        category: selectedTreatment.category,
+        employee: selectedTreatment.employee,
+      });
+    }
+  };
+
+  const handleRemoveTreatment = () => {
+    setFormData({
+      ...formData,
+      treatmentId: '',
+      treatmentName: '',
+      description: '',  
+      room: '',
+      category: '',
+      employee: '',
+    });
+  };
+
+  // Function to determine max people per category
+  const getMaxPeopleForCategory = (category: string) => {
+    switch (category) {
+      case 'Pool':
+      case 'Sauna':
+        return 10; 
+      case 'Massage':
+        return 2;   
+      case 'Body Treatment':
+      case 'Facial Care':
+        return 1;   
+      default:
+        return 10;  
+    }
+  };
+
+  const handleBookingSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const selectedTreatment = treatments.find(
+      (treatment) => treatment.treatmentId === formData.treatmentId
+    );
+
+    const maxPeople = getMaxPeopleForCategory(formData.category);
+
+    // Check if the number of people exceeds the allowed maximum for this category
+    if (formData.numberOfPeople > maxPeople) {
+      setErrorMessage(`The maximum number of people for this category (${formData.category}) is ${maxPeople}.`);
+      return;
+    }
+
+    const bookingDetails = {
+      treatmentId: formData.treatmentId,
+      treatmentName: formData.treatmentName,
+      description: formData.description,
+      room: formData.room,
+      category: formData.category,
+      employee: formData.employee,
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      date: formData.date,
+      time: formData.time,
+      price: selectedTreatment?.price ? selectedTreatment.price * formData.numberOfPeople : 0,
+      duration: selectedTreatment?.duration || 0,
+      comment: formData.comment,
+      numberOfPeople: formData.numberOfPeople,
+    };
+
+    console.log('Booking Details:', bookingDetails);
+
+    try {
+      const response = await fetch(
+        'https://uymonst7eb.execute-api.eu-north-1.amazonaws.com/bookings',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(bookingDetails),
+        }
+      );
+
+      const responseBody = await response.json();
+
+      if (!response.ok) {
+        console.error('Server error:', responseBody);
+        setErrorMessage(`Booking failed: ${responseBody.message}`);
+        return;
+      }
+
+      console.log('Booking response:', responseBody);
+      alert(`Booking successful! Confirmation: ${responseBody.bookingId}`);
+    } catch (error) {
+      console.error('Error creating booking:', error);
+      setErrorMessage('Booking failed. Please try again later.');
+    }
+  };
+
+  const groupedTreatments = treatments.reduce((groups, treatment) => {
+    const { category } = treatment;
+    if (!groups[category]) {
+      groups[category] = [];
+    }
+    groups[category].push(treatment);
+    return groups;
+  }, {} as { [key: string]: Treatment[] });
+
+  const handleNumberOfPeopleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const maxPeople = getMaxPeopleForCategory(formData.category);
+    const value = Math.min(Number(e.target.value), maxPeople);
+    setFormData({
+      ...formData,
+      numberOfPeople: value,
+    });
+  };
+
+  useEffect(() => {
+    console.log('Selected category:', formData.category);
+  }, [formData.category]);
+
   return (
     <div className="booking">
       <section className="booking-welcome">
         <h1>Booking</h1>
       </section>
+
       <div className="booking-message">
         Not sure which treatment is right for you? Give us a call or send us a message—we're happy to guide you!
         <br />
         <a href="/contact" className="booking-contact-link">Contact Us Today!</a>
       </div>
 
-      {/* Massage Treatments Section */}
       <section className="booking-section">
-        <h2>Massage Treatments</h2>
-        <div className="booking-card">
-          <h3>Relaxing Spa Massage</h3>
-          <p>A soothing full-body massage to release tension and stress. Can be booked individually, for a couple.</p>
-          <p><strong>Price:</strong> 60 min – 75 £</p>
-          <button className="booking-button">Book</button>
-        </div>
-        <div className="booking-card">
-          <h3>Himalayan Salt Massage</h3>
-          <p>Detox and rejuvenate with a warm Himalayan salt stone massage.</p>
-          <p><strong>Price:</strong> 60 min – 85 £</p>
-          <button className="booking-button">Book</button>
-        </div>
-        <div className="booking-card">
-          <h3>Deep Tissue Massage</h3>
-          <p>Focused massage to relieve deep muscle tension and pain.</p>
-          <p><strong>Price:</strong> 60 min – 80 £</p>
-          <button className="booking-button">Book</button>
+        <div className="treatments-list">
+          {Object.keys(groupedTreatments).length === 0 ? (
+            <p>Loading treatments...</p>
+          ) : (
+            Object.keys(groupedTreatments).map((category) => (
+              <div key={category} className="category-group">
+                <h3 className="booking-category-name">{category}</h3>
+                {groupedTreatments[category].map((treatment) => (
+                  <div key={treatment.treatmentId} className="booking-card">
+                    <h4 className="booking-treatment-name">{treatment.treatmentName}</h4>
+                    <p>{treatment.description}</p> 
+                    <p><strong>Price:</strong> {treatment.duration} min – {treatment.price} £</p>
+                    <button
+                      onClick={() => handleTreatmentSelection(treatment.treatmentId)}
+                      className="booking-button"
+                    >
+                      Book
+                    </button>
+
+                    {formData.treatmentId === treatment.treatmentId && (
+                      <div className="selected-treatment">
+                        <p><strong>Selected Treatment:</strong> {formData.treatmentName}</p>
+                        <button onClick={handleRemoveTreatment} className="remove-treatment-button">
+                          Remove Treatment
+                        </button>
+                      </div>
+                    )}
+
+                    {formData.treatmentId === treatment.treatmentId && (
+                      <div className="booking-form-section">
+                        <h2>Your Details</h2>
+                        <form onSubmit={handleBookingSubmit} className="booking-form">
+                          <input
+                            type="text"
+                            name="name"
+                            placeholder="Your Name"
+                            value={formData.name}
+                            onChange={handleInputChange}
+                          />
+                          <input
+                            type="text"
+                            name="phone"
+                            placeholder="Phone Number"
+                            value={formData.phone}
+                            onChange={handleInputChange}
+                          />
+                          <input
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                          />
+                          <input
+                            type="date"
+                            name="date"
+                            value={formData.date}
+                            onChange={handleInputChange}
+                          />
+                          <input
+                            type="time"
+                            name="time"
+                            value={formData.time}
+                            onChange={handleInputChange}
+                          />
+                          <input
+                            type="number"
+                            name="numberOfPeople"
+                            placeholder="Number of People"
+                            value={formData.numberOfPeople}
+                            onChange={handleNumberOfPeopleChange}
+                            min="1"
+                            max={getMaxPeopleForCategory(formData.category)} 
+                          />
+                          <textarea
+                            name="comment"
+                            placeholder="Enter a comment (e.g. additional people for the booking)"
+                            value={formData.comment}
+                            onChange={handleInputChange}
+                            rows={4}
+                            style={{ resize: 'none' }} 
+                          />
+                          
+                          {errorMessage && (
+                            <div className="error-message">
+                              <p>{errorMessage}</p>
+                            </div>
+                          )}
+                          
+                          <button type="submit">Book Now</button>
+                        </form>
+                      </div>
+                    )}
+                  </div>
+                ))}
+
+              </div>
+            ))
+          )}
         </div>
       </section>
-
-      {/* Body Care Treatments Section */}
-      <section className="booking-section">
-        <h2>Body Care Treatments</h2>
-        <div className="booking-card">
-          <h3>Body Scrub & Hydration</h3>
-          <p>Exfoliate and revitalize your skin with a full-body scrub and hydration.</p>
-          <p><strong>Price:</strong> 45 min – 80 £</p>
-          <button className="booking-button">Book</button>
-        </div>
-        <div className="booking-card">
-          <h3>Aromatherapy Wrap</h3>
-          <p>Relax and detox in a luxurious aromatic body wrap.</p>
-          <p><strong>Price:</strong> 60 min – 50 £</p>
-          <button className="booking-button">Book</button>
-        </div>
-      </section>
-
-      {/* Face Care Treatment Section */}
-      <section className="booking-section">
-        <h2>Face Care Treatments</h2>
-        <div className="booking-card">
-          <h3>Hydrating Facial</h3>
-          <p>Nourish and hydrate your skin with our gentle face treatment.</p>
-          <p><strong>Price:</strong> 45 min – 70 £</p>
-          <button className="booking-button">Book</button>
-        </div>
-        <div className="booking-card">
-          <h3>Anti-Aging Facial</h3>
-          <p>Smooth fine lines and rejuvenate your skin with premium products.</p>
-          <p><strong>Price:</strong> 60 min – 75 £</p>
-          <button className="booking-button">Book</button>
-        </div>
-      </section>
-
-      {/* Sauna Experiences Section */}
-      <section className="booking-section">
-        <h2>Sauna Experiences</h2>
-        <div className="booking-card">
-          <h3>Indoor Sauna Session</h3>
-          <p>Enjoy a private and cozy sauna experience indoors. Can be booked individually, for a couple, or for a group of 6.</p>
-          <p><strong>Price:</strong> 60 min – 50 £</p>
-          <button className="booking-button">Book</button>
-        </div>
-        <div className="booking-card">
-          <h3>Outdoor Sauna Experience</h3>
-          <p>Immerse in nature with our outdoor sauna, perfect for relaxation. Can be booked individually, for a couple, or for a group of 6.</p>
-          <p><strong>Price:</strong> 60 min – 60 £</p>
-          <button className="booking-button">Book</button>
-        </div>
-      </section>
-
-      {/* Relax & Bubble Pool Section */}
-      <section className="booking-section">
-        <h2>Relax & Bubble Pool</h2>
-        <div className="booking-card">
-          <h3>Bubble Pool & Relax Area</h3>
-          <p>Unwind in our luxurious bubble pool and relaxation lounge. Can be booked by groups of up to 10 people.</p>
-          <p><strong>Price:</strong> 90 min – 70 £</p>
-          <button className="booking-button">Book</button>
-        </div>
-      </section>
-
-      {/* Events Section */}
       <section className="booking-section-events">
         <h2>Events</h2>
         <div className="booking-card-events">
           <h3>Customizable Event Packages</h3>
           <Link to="/event/packages" className="booking-link-events">Learn More About Our Event Packages</Link>
-          </div>
+        </div>
       </section>
-
     </div>
   );
 };
