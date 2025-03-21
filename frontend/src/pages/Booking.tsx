@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import '../styles/Booking.css';
 import { Link } from 'react-router-dom';
+import flower from '../assets/booking-flower.png'
 
 type Treatment = {
   treatmentId: string;
@@ -210,6 +211,10 @@ const Booking = () => {
 
   return (
     <div className="booking">
+      <img src={flower} alt="decorative flower" className="booking-flower-top-right" />
+      <img src={flower} alt="decorative flower" className="booking-flower-middle-left" />
+      <img src={flower} alt="decorative flower" className="booking-flower-bottom-right" />
+
       <section className="booking-welcome">
         <h1>Booking</h1>
       </section>
