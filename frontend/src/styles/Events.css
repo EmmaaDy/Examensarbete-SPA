@@ -27,6 +27,7 @@
     color: #3A5465;
     font-size: 2rem;
     font-weight: lighter;
+    margin-bottom: 100px;
 }
 
 .events-leaf {
@@ -40,6 +41,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin-left: 100px;
+    margin-bottom: 50px;
 }
 
 .events-bg {
